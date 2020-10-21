@@ -1,16 +1,17 @@
-# time_app
+#### My Time calculator app project based on Flutter &  Dart <img src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/flutter/flutter.png" style="max-width:100%;" height="20">   <img src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/dart/dart.png" style="max-width:100%;" height="20">
 
-A new Flutter project.
+#
 
-## Getting Started
+*This is my first own mobile app, which is meant to calculate how many days left to a specified date.*
 
-This project is a starting point for a Flutter application.
+*It gives a possibility to choose between few options like : week days only, show time in hours,minutes  etc.* 
 
-A few resources to get you started if this is your first Flutter project:
+# 
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+**How to set it up locally?** &#129047;
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+> You must have working properly Android / iOS Emulator  or your own device configured with flutter.
+
+>  Tutorial how to install and configure it all can be found here: https://flutter.dev/docs/get-started/install
+
+ If everything is configured, while in main directory, type `flutter run`  to start app in your emulator.
