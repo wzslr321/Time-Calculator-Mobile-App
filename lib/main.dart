@@ -13,6 +13,7 @@ class MyApp extends StatelessWidget {
       title: 'Time calculator',
       theme: ThemeData(
         primarySwatch: Colors.lightBlue,
+        accentColor:Color.fromRGBO(196 , 195, 208, 0.2),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: MyHomePage(),

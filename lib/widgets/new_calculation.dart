@@ -16,26 +16,33 @@ class Item {
 }
 
 class _NewCalculationState extends State<NewCalculation> {
-  DateTime _actualDate;
+  DateTime _actualDate = DateTime.now();
   DateTime _selectedDate;
 
   String _option;
 
   final List<String> _calculateOptions =  ['Years', 'Months', 'Days', 'WeekDays', 'Weekends', 'Hours', 'Minutes', 'Seconds'];
-  final  _calculateOptionController = TextEditingController();
 
   void _calculateDate() {
 
-    final _enteredOption = _calculateOptionController.text;
+    final _enteredOption = _option;
+
+
 
      if(_actualDate == null || _selectedDate == null || _enteredOption.isEmpty)
        return;
+
+     print(_enteredOption);
+     print(_selectedDate);
+     print(_actualDate);
 
      widget.calculate(
        _actualDate,
        _selectedDate,
        _enteredOption,
      );
+
+
 
      Navigator.of(context).pop();
   }
@@ -85,7 +92,7 @@ class _NewCalculationState extends State<NewCalculation> {
                     child: Text('Picked date : ${_selectedDate != null ? DateFormat.yMd().format(_selectedDate): 'No date chosen!'}'),
                 ),
                 FlatButton(
-                  textColor: Theme.of(context).primaryColorLight,
+                  textColor: Theme.of(context).primaryColor,
                   child:Text(
                     'Choose data',
                     style:TextStyle(fontWeight: FontWeight.bold),
@@ -93,6 +100,23 @@ class _NewCalculationState extends State<NewCalculation> {
                   onPressed: _showDatePicker,
                 )
               ],)
+            ),
+            Container(
+              height:100,
+              color:Theme.of(context).accentColor,
+              child:Row(children: [
+                FlatButton(
+                  child:Text(
+                    'Calculate',
+                    style:TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 22,
+                        color:Theme.of(context).primaryColor,
+                    )
+                  ),
+                  onPressed: _calculateDate,
+                )
+              ],),
             ),
           ],
         ),
