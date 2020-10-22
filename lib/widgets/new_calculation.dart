@@ -2,57 +2,55 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class NewCalculation extends StatefulWidget {
-  final Function calculate;
+  final Function calculationValues;
 
-  NewCalculation(this.calculate);
+  NewCalculation(this.calculationValues);
 
   @override
   _NewCalculationState createState() => _NewCalculationState();
 }
 
-class Item {
-  const Item(this.name);
-  final String name;
+DateTime _actualDate = DateTime.now();
+DateTime _selectedDate;
+
+String _option;
+int _score;
+
+int calculateScore(DateTime a, DateTime b) {
+  final int calculationScore = _score;
+  final _enteredOption = _option;
+
+  int result = int.parse(DateFormat.y().format(a)) - int.parse(DateFormat.y().format(b));
+
+  if(_actualDate == null || _selectedDate == null || _enteredOption.isEmpty)
+    return null;
+  return result;
+
 }
 
 class _NewCalculationState extends State<NewCalculation> {
-  DateTime _actualDate = DateTime.now();
-  DateTime _selectedDate;
 
-  String _option;
 
-  final List<String> _calculateOptions =  ['Years', 'Months', 'Days', 'WeekDays', 'Weekends', 'Hours', 'Minutes', 'Seconds'];
+  final List<String> _calculateOptions =  ['Years', 'Months', 'Days',  'Hours', 'Minutes', 'Seconds'];
+
+
 
   void _calculateDate() {
 
-    final _enteredOption = _option;
-
-
-
-     if(_actualDate == null || _selectedDate == null || _enteredOption.isEmpty)
-       return;
-
-     print(_enteredOption);
-     print(_selectedDate);
-     print(_actualDate);
-
-     widget.calculate(
-       _actualDate,
-       _selectedDate,
-       _enteredOption,
+     widget.calculationValues(
+        calculateScore(_selectedDate, _actualDate)
      );
 
-
-
      Navigator.of(context).pop();
+
   }
 
   void _showDatePicker() {
     showDatePicker(
       context: context,
       initialDate: DateTime.now(),
-      firstDate: DateTime(2020),
-      lastDate:DateTime.now(),
+      firstDate: DateTime.now(),
+      lastDate:DateTime(2030),
     ).then( (pickedDate) {
         if(pickedDate == null)
           return;

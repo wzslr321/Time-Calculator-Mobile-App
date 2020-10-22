@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 import './widgets/new_calculation.dart';
+import './widgets/calculation_display.dart';
 import './models/calculated_values.dart';
+
 
 void main() => runApp(MyApp());
 
@@ -28,27 +30,24 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-void _addNewCalculation(
-    int clcYear, int clcMonth, int clcDays,
-    int clcWeekDays,int clcWeekends, int clcHours,
-    int clcMinutes, int clcSeconds
-) {
-  final newCalculation = CalculatedValues(
-      years: clcYear, months: clcMonth, days: clcDays,
-      weekDays: clcWeekDays, weekends: clcWeekends,
-      hours: clcHours, minutes: clcMinutes, seconds: clcSeconds
-  );
-
-}
-
-
-void _showAddNewCalculation(BuildContext ctx) {
-  showModalBottomSheet(context: ctx, builder: (_){
-    return NewCalculation(_addNewCalculation);
-  },);
-}
-
 class _MyHomePageState extends State<MyHomePage> {
+
+  final List<CalculatedValues> _userCalculation = [];
+
+
+  void _addNewCalculation(
+      int clcValue,
+      ) {
+    final newCalculation =  CalculatedValues(
+      value: clcValue,
+    );
+
+    setState((){
+       _userCalculation.add(newCalculation);
+    });
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,7 +58,8 @@ class _MyHomePageState extends State<MyHomePage> {
           child:Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              NewCalculation(_showAddNewCalculation),
+              NewCalculation(calculateScore),
+              CalculatedValuesList(_userCalculation),
             ],
           )
         )
