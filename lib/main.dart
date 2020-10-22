@@ -29,7 +29,7 @@ class MyHomePage extends StatefulWidget {
 
 void _addNewCalculation(
     int clcYear, int clcMonth, int clcDays,
-    int clcWeekDays, int clcWeekends, int clcHours,
+    int clcWeekDays,int clcWeekends, int clcHours,
     int clcMinutes, int clcSeconds
 ) {
   final newCalculation = CalculatedValues(
