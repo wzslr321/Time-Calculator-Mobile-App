@@ -10,21 +10,46 @@ class NewCalculation extends StatefulWidget {
   _NewCalculationState createState() => _NewCalculationState();
 }
 
-DateTime _actualDate = DateTime.now();
+final DateTime _actualDate = DateTime.now();
+
 DateTime _selectedDate;
-
 String _option;
-int _score;
+String _result;
+String _isLessString;
+int _calculationResult;
+bool _isLessYears;
 
-int calculateScore(DateTime a, DateTime b) {
-  final int calculationScore = _score;
-  final _enteredOption = _option;
+String calculateScore(DateTime a, DateTime b, String c) {
+  final bool _isLess = _isLessYears;
 
-  int result = int.parse(DateFormat.y().format(a)) - int.parse(DateFormat.y().format(b));
-
-  if(_actualDate == null || _selectedDate == null || _enteredOption.isEmpty)
+  if(_actualDate == null || _selectedDate == null || _option.isEmpty)
     return null;
-  return result;
+
+  switch(_option){
+    case 'Years': {
+      bool _checkDataYears(DateTime a, DateTime b){
+        if(int.parse(DateFormat.m().format(a)) - int.parse(DateFormat.m().format(b)) >= 1){
+          _isLessYears = false;
+          _isLessString = 'More';
+        } else {
+          _isLessYears = true;
+          _isLessString = 'Less';
+        }
+        return _isLess;
+      }
+
+      _calculationResult = int.parse(DateFormat.y().format(a)) - int.parse(DateFormat.y().format(b));
+
+      if((_checkDataYears(_selectedDate, _actualDate)) == true){
+        _result = '$_isLessString than $_calculationResult years left!';
+      } else {
+        _result = '$_isLessString than $_calculationResult years left!';
+      }
+
+    }
+  }
+  print(_result);
+  return _result;
 
 }
 
@@ -38,7 +63,7 @@ class _NewCalculationState extends State<NewCalculation> {
   void _calculateDate() {
 
      widget.calculationValues(
-        calculateScore(_selectedDate, _actualDate)
+        calculateScore(_selectedDate, _actualDate, _option)
      );
 
      Navigator.of(context).pop();

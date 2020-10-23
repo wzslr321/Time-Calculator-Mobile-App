@@ -25,7 +25,7 @@ class CalculatedValuesList extends StatelessWidget {
                   child:Text('${calculations[index].value}')
               ),
             ),
-            title:Text('Left'),
+            title:Text(''),
           ),
         );
       })
