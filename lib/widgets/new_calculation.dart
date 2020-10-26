@@ -64,7 +64,6 @@ class _NewCalculationState extends State<NewCalculation> {
         });
 
 
-
         print(userCalculation);
 
 

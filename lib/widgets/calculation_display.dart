@@ -8,9 +8,7 @@ class CalculatedValuesList extends StatefulWidget {
 
 
 
-  var userCalculationList =  userCalculation;
-
-  CalculatedValuesList(this.userCalculationList);
+  CalculatedValuesList(userCalculation);
 
   @override
   _CalculatedValuesListState createState() => _CalculatedValuesListState();
@@ -24,19 +22,15 @@ class _CalculatedValuesListState extends State<CalculatedValuesList> {
   Widget build(BuildContext context) {
     return Container(
       height:450,
-      child:widget.userCalculationList.isEmpty ? Column(children: [
+      child:userCalculation.isEmpty ? Column(children: [
         Text('No calculations have been made yet'),
       ],)
       : ListView.builder(itemBuilder: (ctx,index){
         return Card(
           elevation:5,
-          child:ListTile(
-            leading:CircleAvatar(radius: 30,
-              child:FittedBox(
-                  child:Text('${widget.userCalculationList[index].value}')
-              ),
-            ),
-            title:Text(''),
+          child:Column(children: [
+            Text('$userCalculation[index].value}'),
+          ],
           ),
         );
       })

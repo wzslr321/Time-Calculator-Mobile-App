@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import './widgets/new_calculation.dart';
 import './widgets/calculation_display.dart';
-import './models/calculated_values.dart';
+
 
 
 void main() => runApp(MyApp());
@@ -36,9 +36,6 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
 
 
-
-  final List<CalculatedValues> _userCalculation = [];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,7 +47,7 @@ class _MyHomePageState extends State<MyHomePage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               NewCalculation(),
-              CalculatedValuesList(_userCalculation),
+              CalculatedValuesList(userCalculation),
             ],
           )
         )
