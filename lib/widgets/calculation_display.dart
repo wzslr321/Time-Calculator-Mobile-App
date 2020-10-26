@@ -1,19 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 import '../models/calculated_values.dart';
 
 
-class CalculatedValuesList extends StatelessWidget {
+class CalculatedValuesList extends StatefulWidget {
   final List<CalculatedValues> calculations;
 
   CalculatedValuesList(this.calculations);
 
   @override
+  _CalculatedValuesListState createState() => _CalculatedValuesListState();
+}
+
+class _CalculatedValuesListState extends State<CalculatedValuesList> {
+
+
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       height:450,
-      child:calculations.isEmpty ? Column(children: [
+      child:widget.calculations.isEmpty ? Column(children: [
         Text('No calculations have been made yet'),
       ],)
       : ListView.builder(itemBuilder: (ctx,index){
@@ -22,7 +29,7 @@ class CalculatedValuesList extends StatelessWidget {
           child:ListTile(
             leading:CircleAvatar(radius: 30,
               child:FittedBox(
-                  child:Text('${calculations[index].value}')
+                  child:Text('${widget.calculations[index].value}')
               ),
             ),
             title:Text(''),

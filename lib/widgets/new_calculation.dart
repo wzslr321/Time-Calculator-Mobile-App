@@ -1,57 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import '../models/calculated_values.dart';
 
 class NewCalculation extends StatefulWidget {
-  final Function calculationValues;
 
-  NewCalculation(this.calculationValues);
+  NewCalculation();
 
   @override
   _NewCalculationState createState() => _NewCalculationState();
 }
-
-final DateTime _actualDate = DateTime.now();
-
-DateTime _selectedDate;
-String _option;
-String _result;
+DateTime actualDateTime = DateTime.now();
+String option;
+String result;
 String _isLessString;
 int _calculationResult;
 bool _isLessYears;
+DateTime selectedDate;
 
-String calculateScore(DateTime a, DateTime b, String c) {
-  final bool _isLess = _isLessYears;
-
-  if(_actualDate == null || _selectedDate == null || _option.isEmpty)
-    return null;
-
-  switch(_option){
-    case 'Years': {
-      bool _checkDataYears(DateTime a, DateTime b){
-        if(int.parse(DateFormat.m().format(a)) - int.parse(DateFormat.m().format(b)) >= 1){
-          _isLessYears = false;
-          _isLessString = 'More';
-        } else {
-          _isLessYears = true;
-          _isLessString = 'Less';
-        }
-        return _isLess;
-      }
-
-      _calculationResult = int.parse(DateFormat.y().format(a)) - int.parse(DateFormat.y().format(b));
-
-      if((_checkDataYears(_selectedDate, _actualDate)) == true){
-        _result = '$_isLessString than $_calculationResult years left!';
-      } else {
-        _result = '$_isLessString than $_calculationResult years left!';
-      }
-
-    }
-  }
-  print(_result);
-  return _result;
-
-}
+final List<CalculatedValues> _userCalculation = [];
 
 class _NewCalculationState extends State<NewCalculation> {
 
@@ -60,13 +26,53 @@ class _NewCalculationState extends State<NewCalculation> {
 
 
 
-  void _calculateDate() {
+ calculateScore(DateTime actualDate, DateTime selectedDate, String option) {
 
-     widget.calculationValues(
-        calculateScore(_selectedDate, _actualDate, _option)
-     );
+   print(actualDate);
+   print(selectedDate);
+   print(option);
 
-     Navigator.of(context).pop();
+    actualDate = actualDateTime;
+
+    if(actualDate == null || selectedDate == null || option.isEmpty)
+      return null;
+
+    selectedDate = selectedDate;
+    option       = option;
+
+    switch(option){
+      case 'Years': {
+        bool _checkDataYears(DateTime a, DateTime b){
+          if(int.parse(DateFormat.m().format(actualDate)) - int.parse(DateFormat.m().format(selectedDate)) >= 1){
+            _isLessYears = false;
+            _isLessString = 'More';
+          } else {
+            _isLessYears = true;
+            _isLessString = 'Less';
+          }
+          return _isLessYears;
+        }
+
+        _calculationResult = int.parse(DateFormat.y().format(selectedDate)) - int.parse(DateFormat.y().format(actualDate));
+
+        if((_checkDataYears(selectedDate, actualDate)) == true){
+          result = '$_isLessString than $_calculationResult years left!';
+        } else {
+          result = '$_isLessString than $_calculationResult years left!';
+        }
+
+
+
+      }
+    }
+    print('====!===!====!====!====!=');
+
+        Navigator.of(context).pop();
+
+        setState(() {
+          _userCalculation.add(CalculatedValues(value: result));
+        });
+
 
   }
 
@@ -80,7 +86,7 @@ class _NewCalculationState extends State<NewCalculation> {
         if(pickedDate == null)
           return;
         setState( () {
-          _selectedDate = pickedDate;
+          selectedDate = pickedDate;
         });
     });
   }
@@ -97,11 +103,11 @@ class _NewCalculationState extends State<NewCalculation> {
             DropdownButton<String>(
               onChanged:(String value){
                 setState(() {
-                   _option = value;
+                   option = value;
                 });
               },
-              value: _option,
-              hint:Text('${_option != null ? _option: 'Select option'}'),
+              value: option,
+              hint:Text('${option != null ? option: 'Select option'}'),
                 items: _calculateOptions.map((String value){
                   return new DropdownMenuItem<String>(
                       value:value,
@@ -112,7 +118,7 @@ class _NewCalculationState extends State<NewCalculation> {
               height:70,
               child:Row(children: [
                 Expanded(
-                    child: Text('Picked date : ${_selectedDate != null ? DateFormat.yMd().format(_selectedDate): 'No date chosen!'}'),
+                    child: Text('Picked date : ${selectedDate != null ? DateFormat.yMd().format(selectedDate): 'No date chosen!'}'),
                 ),
                 FlatButton(
                   textColor: Theme.of(context).primaryColor,
@@ -121,7 +127,7 @@ class _NewCalculationState extends State<NewCalculation> {
                     style:TextStyle(fontWeight: FontWeight.bold),
                   ),
                   onPressed: _showDatePicker,
-                )
+                ),
               ],)
             ),
             Container(
@@ -137,9 +143,9 @@ class _NewCalculationState extends State<NewCalculation> {
                         color:Theme.of(context).primaryColor,
                     )
                   ),
-                  onPressed: _calculateDate,
-                )
-              ],),
+                  onPressed:() => calculateScore,
+                ),
+              ]),
             ),
           ],
         ),

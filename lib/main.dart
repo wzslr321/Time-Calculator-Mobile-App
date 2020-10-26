@@ -24,7 +24,10 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  
+
+
+
+
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -32,21 +35,9 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
+
+
   final List<CalculatedValues> _userCalculation = [];
-
-
-  void _addNewCalculation(
-      int clcValue,
-      ) {
-    final newCalculation =  CalculatedValues(
-      value: clcValue,
-    );
-
-    setState((){
-       _userCalculation.add(newCalculation);
-    });
-
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +49,7 @@ class _MyHomePageState extends State<MyHomePage> {
           child:Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              NewCalculation(calculateScore),
+              NewCalculation(),
               CalculatedValuesList(_userCalculation),
             ],
           )
