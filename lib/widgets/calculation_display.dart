@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../models/calculated_values.dart';
 import '../widgets/new_calculation.dart';
 
 
@@ -17,7 +16,6 @@ class CalculatedValuesList extends StatefulWidget {
 class _CalculatedValuesListState extends State<CalculatedValuesList> {
 
 
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -25,14 +23,18 @@ class _CalculatedValuesListState extends State<CalculatedValuesList> {
       child:userCalculation.isEmpty ? Column(children: [
         Text('No calculations have been made yet'),
       ],)
+      // ignore: missing_return
       : ListView.builder(itemBuilder: (ctx,index){
-        return Card(
-          elevation:5,
-          child:Column(children: [
-            Text('$userCalculation[index].value}'),
-          ],
-          ),
-        );
+        if(index == 0) {
+          return Card(
+            elevation:5,
+            child:Column(children: [
+              // ignore: unrelated_type_equality_checks
+              Text('${userCalculation[index].value}'),
+            ],
+            ),
+          );
+        }
       })
 
 

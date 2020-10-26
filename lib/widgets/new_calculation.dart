@@ -9,7 +9,7 @@ class NewCalculation extends StatefulWidget {
   @override
   _NewCalculationState createState() => _NewCalculationState();
 }
-DateTime _actualDate = DateTime.now();
+DateTime _actualDate = new DateTime.now();
 String _option;
 String _result;
 String _isLessString;
@@ -26,7 +26,7 @@ class _NewCalculationState extends State<NewCalculation> {
 
 
 
- calculateScore() {
+ void calculateScore() {
    final bool _isLess = _isLessYears;
 
    if(_actualDate == null || _selectedDate == null || _option.isEmpty)
@@ -59,13 +59,7 @@ class _NewCalculationState extends State<NewCalculation> {
     print('====!===!====!====!====!=');
     print(_result);
 
-        setState(() {
-          userCalculation.add(CalculatedValues(value: _result));
-        });
-
-
-        print(userCalculation);
-
+        return  userCalculation.add(CalculatedValues(value: _result));
 
   }
 
