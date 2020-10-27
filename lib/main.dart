@@ -2,13 +2,11 @@ import 'package:flutter/material.dart';
 
 import './widgets/new_calculation.dart';
 import './widgets/calculation_display.dart';
-
-
+import './models/calculated_values.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -24,17 +22,19 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-
-
-
-
-
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
+
+
 class _MyHomePageState extends State<MyHomePage> {
 
+  void _addUserCalc() {
+    setState(() {
+      userCalculation.add(CalculatedValues(value: 'test'));
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:time_app/widgets/calculation_display.dart';
+
 import '../models/calculated_values.dart';
 
 class NewCalculation extends StatefulWidget {
-
   NewCalculation();
 
   @override
   _NewCalculationState createState() => _NewCalculationState();
 }
+
 DateTime _actualDate = new DateTime.now();
 String _option;
 String _result;
@@ -17,14 +19,10 @@ int _calculationResult;
 bool _isLessYears;
 DateTime _selectedDate;
 
-final List<CalculatedValues> userCalculation = [];
+ List<CalculatedValues> userCalculation = [];
+final List<String> _calculateOptions =  ['Years', 'Months', 'Days',  'Hours', 'Minutes', 'Seconds'];
 
 class _NewCalculationState extends State<NewCalculation> {
-
-
-  final List<String> _calculateOptions =  ['Years', 'Months', 'Days',  'Hours', 'Minutes', 'Seconds'];
-
-
 
  void calculateScore() {
    final bool _isLess = _isLessYears;
@@ -56,10 +54,14 @@ class _NewCalculationState extends State<NewCalculation> {
      }
    }
 
-    print('====!===!====!====!====!=');
-    print(_result);
+   // ignore: missing_return
+   showModalBottomSheet(context: context, builder:(_){
+     userCalculation.add(CalculatedValues(value: _result));
 
-        return  userCalculation.add(CalculatedValues(value: _result));
+      return CalculatedValuesList(userCalculation);
+
+   });
+
 
   }
 

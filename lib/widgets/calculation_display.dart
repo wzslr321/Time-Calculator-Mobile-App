@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../widgets/new_calculation.dart';
-
+import '../models/calculated_values.dart';
 
 class CalculatedValuesList extends StatefulWidget {
-
-
 
   CalculatedValuesList(userCalculation);
 
@@ -14,6 +12,14 @@ class CalculatedValuesList extends StatefulWidget {
 }
 
 class _CalculatedValuesListState extends State<CalculatedValuesList> {
+
+  List<CalculatedValues> userCalculations;
+
+  void userCalculationState() {
+    setState((){
+        userCalculation = userCalculations ;
+    });
+  }
 
 
   @override
@@ -29,15 +35,12 @@ class _CalculatedValuesListState extends State<CalculatedValuesList> {
           return Card(
             elevation:5,
             child:Column(children: [
-              // ignore: unrelated_type_equality_checks
               Text('${userCalculation[index].value}'),
-            ],
+              ],
             ),
           );
         }
       })
-
-
     );
   }
 }
