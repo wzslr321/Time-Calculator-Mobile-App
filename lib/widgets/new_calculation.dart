@@ -85,61 +85,71 @@ class _NewCalculationState extends State<NewCalculation> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation:10,
-      child: Container(
-        padding:EdgeInsets.all(15),
-        child:Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            DropdownButton<String>(
-              onChanged:(String value){
-                setState(() {
-                   _option = value;
-                });
-              },
-              value: _option,
-              hint:Text('${_option != null ? _option: 'Select option'}'),
-                items: _calculateOptions.map((String value){
-                  return new DropdownMenuItem<String>(
-                      value:value,
-                      child:new Text(value)
-                  );
-                }).toList(),),
-            Container(
-              height:70,
-              child:Row(children: [
-                Expanded(
-                    child: Text('Picked date : ${_selectedDate != null ? DateFormat.yMd().format(_selectedDate): 'No date chosen!'}'),
-                ),
-                FlatButton(
-                  textColor: Theme.of(context).primaryColor,
-                  child:Text(
-                    'Choose data',
-                    style:TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  onPressed: _showDatePicker,
-                ),
-              ],)
-            ),
-            Container(
-              height:100,
-              color:Theme.of(context).accentColor,
-              child:Row(children: [
-                FlatButton(
-                  child:Text(
-                    'Calculate',
-                    style:TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 22,
-                        color:Theme.of(context).primaryColor,
-                    )
-                  ),
-                  onPressed:_calculateScore,
-                ),
-              ]),
-            ),
-          ],
+
+   final _dropDownButton = DropdownButton<String>(
+     onChanged:(String value){
+       setState(() {
+         _option = value;
+       });
+     },
+     value: _option,
+     hint:Text('${_option != null ? _option: 'Select option'}'),
+     items: _calculateOptions.map((String value){
+       return new DropdownMenuItem<String>(
+           value:value,
+           child:new Text(value)
+       );
+     }).toList(),);
+
+   final _datePicker = Container(
+       height:70,
+       child:Row(children: [
+         Expanded(
+           child: Text('Picked date : ${_selectedDate != null ? DateFormat.yMd().format(_selectedDate): 'No date chosen!'}'),
+         ),
+         FlatButton(
+           textColor: Theme.of(context).primaryColor,
+           child:Text(
+             'Choose data',
+             style:TextStyle(fontWeight: FontWeight.bold),
+           ),
+           onPressed: _showDatePicker,
+         ),
+       ],)
+   );
+
+   final _calculateButton = Container(
+     height:100,
+     color:Theme.of(context).accentColor,
+     child:Row(children: [
+       FlatButton(
+         child:Text(
+             'Calculate',
+             style:TextStyle(
+               fontWeight: FontWeight.bold,
+               fontSize: 22,
+               color:Theme.of(context).primaryColor,
+             )
+         ),
+         onPressed:_calculateScore,
+       ),
+     ]),
+   );
+
+
+    return Container(
+      child: Card(
+        elevation:10,
+        child: Container(
+          padding:EdgeInsets.all(15),
+          child:Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              _dropDownButton,
+              _datePicker,
+              _calculateButton,
+            ],
+          ),
         ),
       ),
     );

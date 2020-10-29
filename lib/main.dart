@@ -37,16 +37,27 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+
+    final _appBar =  AppBar(
+      title:Text('Time calculator'),
+    );
+
+    final mediaQuery = (MediaQuery.of(context).size.height - _appBar.preferredSize.height - MediaQuery.of(context).padding.top) * 0.5;
+
     return Scaffold(
-        appBar: AppBar(
-          title:Text('Time calculator')
-        ),
+        appBar:_appBar,
         body:SingleChildScrollView(
           child:Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              NewCalculation(),
-              CalculatedValuesList(userCalculation),
+              Container(
+                  height: mediaQuery,
+                  child: NewCalculation(),
+              ),
+              Container(
+                  height: mediaQuery,
+                  child: CalculatedValuesList(userCalculation),
+              ),
             ],
           )
         )

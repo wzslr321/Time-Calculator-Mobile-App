@@ -37,7 +37,6 @@ class _CalculatedValuesListState extends State<CalculatedValuesList> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height:450,
       child:userCalculation.isEmpty ? Column(children: [
         SizedBox(
             height:200,
