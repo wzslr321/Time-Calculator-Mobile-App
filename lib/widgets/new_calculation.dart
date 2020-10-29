@@ -12,19 +12,22 @@ class NewCalculation extends StatefulWidget {
 }
 
 DateTime _actualDate = new DateTime.now();
+DateTime _selectedDate;
+
 String _option;
 String _result;
 String _isLessString;
-int _calculationResult;
-bool _isLessYears;
-DateTime _selectedDate;
 
- List<CalculatedValues> userCalculation = [];
+int _calculationResult;
+
+bool _isLessYears;
+
+List<CalculatedValues> userCalculation = [];
 final List<String> _calculateOptions =  ['Years', 'Months', 'Days',  'Hours', 'Minutes', 'Seconds'];
 
 class _NewCalculationState extends State<NewCalculation> {
 
- void calculateScore() {
+ void _calculateScore() {
    final bool _isLess = _isLessYears;
 
    if(_actualDate == null || _selectedDate == null || _option.isEmpty)
@@ -54,12 +57,9 @@ class _NewCalculationState extends State<NewCalculation> {
      }
    }
 
-   // ignore: missing_return
    showModalBottomSheet(context: context, builder:(_){
      userCalculation.add(CalculatedValues(value: _result));
-
       return CalculatedValuesList(userCalculation);
-
    });
 
 
@@ -79,6 +79,9 @@ class _NewCalculationState extends State<NewCalculation> {
         });
     });
   }
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -132,7 +135,7 @@ class _NewCalculationState extends State<NewCalculation> {
                         color:Theme.of(context).primaryColor,
                     )
                   ),
-                  onPressed:calculateScore,
+                  onPressed:_calculateScore,
                 ),
               ]),
             ),
