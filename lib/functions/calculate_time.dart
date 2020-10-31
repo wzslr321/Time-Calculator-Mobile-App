@@ -1,46 +1,45 @@
 import 'package:intl/intl.dart';
 
 
-DateTime _actualDate = new DateTime.now();
+// Global variables used in new_calculation && calculation_display
 DateTime selectedDate;
 
 String option;
 String result;
-String isLessString;
 
-int calculationResult;
+void calculateScore() {
 
-bool isLessYears;
-final isLess = isLessYears;
+  DateTime _actualDate = new DateTime.now();
+  String _isLessString;
+  bool _isLessYears;
+  int _calculationResult;
 
-calculateScore() {
+   if( selectedDate == null || option.isEmpty)
+      result = 'Please enter date first!';
+   if(_actualDate == null )
+      result = 'Weird error occurred, please report it to our developers';
 
-  if(_actualDate == null || selectedDate == null || option.isEmpty)
-    return null;
-
-  switch(option){
-    case 'Years': {
-      bool _checkDataYears(DateTime a, DateTime b){
-        if(int.parse(DateFormat.m().format(selectedDate)) - int.parse(DateFormat.m().format(_actualDate)) >= 1){
-          isLessYears = false;   isLessString = 'More';
-        } else {
-          isLessYears = true;    isLessString = 'Less';
+  switch(option) {
+    case 'Years':
+      {
+        bool _checkIsLess(DateTime selected, DateTime actual) {
+          if (int.parse(DateFormat.M().format(selectedDate)) -
+              int.parse(DateFormat.M().format(_actualDate)) >= 1) {
+            _isLessYears = false;
+            _isLessString = 'More';
+          } else {
+            _isLessYears = true;
+            _isLessString = 'Less';
+          }
+          return _isLessYears;
         }
-        return isLess;
+
+        _calculationResult = int.parse(DateFormat.y().format(selectedDate)) -
+            int.parse(DateFormat.y().format(_actualDate));
+
+        _checkIsLess(selectedDate, _actualDate);
+        (_isLessString != null && _calculationResult != null)
+            ? result = '$_isLessString than $_calculationResult years left!'
+            : result = 'Error occurred';
       }
-
-      calculationResult = int.parse(DateFormat.y().format(selectedDate)) - int.parse(DateFormat.y().format(_actualDate));
-
-      if((_checkDataYears(selectedDate, _actualDate)) == true){
-        result = '$isLessString than $calculationResult years left!';
-      } else {
-        result = '$isLessString than $calculationResult years left!';
-      }
-
-        return result;
-
-
-    }
-  }
-
-}
+  }}

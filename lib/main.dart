@@ -40,12 +40,14 @@ class _MyHomePageState extends State<MyHomePage> {
 
     final curScaleFactor = MediaQuery.of(context).textScaleFactor;
 
+    final appBarTextStyle = TextStyle(
+      fontSize:20 * curScaleFactor,
+    );
+
     final _appBar =  AppBar(
       title:Text(
         'Time calculator',
-        style:TextStyle(
-          fontSize:20 * curScaleFactor,
-        ),
+        style:appBarTextStyle,
       ),
     );
 
@@ -64,9 +66,8 @@ class _MyHomePageState extends State<MyHomePage> {
               Container(
                   height: mediaQuery * 0.6,
                   child: CalculatedValuesList(userCalculation),
-              ),
-            ],
-          )
-        )
+              ),],
+          ),
+        ),
     );
   }}

@@ -23,17 +23,20 @@ class _CalculatedValuesListState extends State<CalculatedValuesList> {
       });
   }
 
+
   final resultTextStyle = TextStyle(
     color:Colors.lightBlue,
-    fontSize:26,
+    fontSize:22,
     fontWeight: FontWeight.bold,
   );
 
   final noCalculationsTextStyle = TextStyle(
       color:Colors.lightBlue,
-      fontSize:24,
+      fontSize:22,
       fontWeight: FontWeight.normal,
   );
+
+
 
 
 
@@ -42,7 +45,14 @@ class _CalculatedValuesListState extends State<CalculatedValuesList> {
     // Variables responsible for responsiveness
     final curScaleFactor   = MediaQuery.of(context).textScaleFactor;
     final mediaQueryWidth  = MediaQuery.of(context).size.width;
-    final mediaQueryHeight = MediaQuery.of(context).size.height;
+
+    // Style variables which requires context
+    final btnTextStyle = TextStyle(
+      fontWeight: FontWeight.bold,
+      fontSize: 20 * curScaleFactor,
+      color: Theme.of(context).primaryColor,
+    );
+
 
     return LayoutBuilder(builder: (ctx, constraints) {
 
@@ -53,11 +63,7 @@ class _CalculatedValuesListState extends State<CalculatedValuesList> {
           FlatButton(
               child: Text(
                   'Calculate',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20 * curScaleFactor,
-                    color: Theme.of(context).primaryColor,
-                  )
+                  style:btnTextStyle,
               ),
               onPressed:() {
                 calculateScore(); userCalculationState();
@@ -89,18 +95,24 @@ class _CalculatedValuesListState extends State<CalculatedValuesList> {
                 ],)
                 : Container(
                   // ignore: missing_return
-                  child: ListView.builder(itemBuilder: (ctx,index){
-                    if(index == 0){
-                      return Card(
-                        elevation:5,
-                        child:Column(children: [
-                          Text('${userCalculation[index].value}',
-                            style:resultTextStyle,
-                          )],
-                        ),
-                      );
-                    }
-                  }),
+                  child: ListView.builder(
+                    itemCount:5,
+                    // ignore: missing_return
+                    itemBuilder:(BuildContext ctx, int index){
+                      if(index == 0){
+                        return ListTile(
+                            leading: Icon(Icons.list),
+                            trailing: Text('${index + 1}',
+                              style: TextStyle(
+                                  color: Colors.green,fontSize: 12),),
+                            title:Text(
+                              '${userCalculation[index].value}',
+                              style:resultTextStyle,
+                            )
+                        );
+                      }
+                    },
+                  ),
                 )
               ),],
           ),

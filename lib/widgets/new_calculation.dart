@@ -11,7 +11,12 @@ class NewCalculation extends StatefulWidget {
   _NewCalculationState createState() => _NewCalculationState();
 }
 
-// Global userCalculation variable used in calculation_display file.
+/*
+   Global userCalculation variable used in calculation_display file.
+   I use List, because in future i plan to display previous calculations.
+   In actual situation, better would be simple string with result.
+ */
+
 List<CalculatedValues> userCalculation = [];
 
 
