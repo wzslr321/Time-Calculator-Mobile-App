@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:time_app/widgets/calculation_display.dart';
 
 import '../models/calculated_values.dart';
 import '../functions/calculate_time.dart';
@@ -12,9 +11,9 @@ class NewCalculation extends StatefulWidget {
   _NewCalculationState createState() => _NewCalculationState();
 }
 
-
+// Global userCalculation variable used in calculation_display file.
 List<CalculatedValues> userCalculation = [];
-final List<String> _calculateOptions =  ['Years', 'Months', 'Days',  'Hours', 'Minutes', 'Seconds'];
+
 
 class _NewCalculationState extends State<NewCalculation> {
 
@@ -34,17 +33,11 @@ class _NewCalculationState extends State<NewCalculation> {
     });
   }
 
- userCalculationState()  {
-    print('===============');
-    print(result);
-    setState((){
-      userCalculation.add(CalculatedValues(value: result));
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
     final curScaleFactor = MediaQuery.of(context).textScaleFactor;
+    final List<String> _calculateOptions =  ['Years', 'Months', 'Days',  'Hours', 'Minutes', 'Seconds'];
 
     /* LayoutBuilder  provides parent widget`s constrains. It helps with sizing, because LayoutBuild`s final size will match its child`s size. */
 
@@ -91,27 +84,7 @@ class _NewCalculationState extends State<NewCalculation> {
 
 
 
-      final _calculateButton = Container(
-        height: constraints.maxHeight * 0.25,
-        color: Theme
-            .of(context)
-            .accentColor,
-        child: Row(children: [
-          FlatButton(
-            child: Text(
-                'Calculate',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20 * curScaleFactor,
-                  color: Theme.of(context).primaryColor,
-                )
-            ),
-            onPressed:() {
-              calculateScore(); userCalculationState();
-            }
-          ),
-        ]),
-      );
+
 
       final pickedDateText = 'Picked date : ${selectedDate != null ? DateFormat.yMd().format(selectedDate) : 'No date chosen!'}';
 
@@ -154,7 +127,6 @@ class _NewCalculationState extends State<NewCalculation> {
             children: [
               _dropDownButton,
               _datePicker,
-              _calculateButton,
             ],
           ),
         ),

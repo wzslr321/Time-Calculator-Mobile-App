@@ -33,11 +33,7 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-
-
 class _MyHomePageState extends State<MyHomePage> {
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +49,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
 
-    final mediaQuery = (MediaQuery.of(context).size.height - _appBar.preferredSize.height - MediaQuery.of(context).padding.top) * 0.5;
+    final mediaQuery = MediaQuery.of(context).size.height - _appBar.preferredSize.height - MediaQuery.of(context).padding.top;
 
     return Scaffold(
         appBar:_appBar,
@@ -62,16 +58,15 @@ class _MyHomePageState extends State<MyHomePage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Container(
-                  height: mediaQuery,
+                  height: mediaQuery * 0.4,
                   child: NewCalculation(),
               ),
               Container(
-                  height: mediaQuery,
+                  height: mediaQuery * 0.6,
                   child: CalculatedValuesList(userCalculation),
               ),
             ],
           )
         )
     );
-  }
-}
+  }}
