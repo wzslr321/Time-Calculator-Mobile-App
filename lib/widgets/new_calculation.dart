@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:time_app/widgets/calculation_display.dart';
 
 import '../models/calculated_values.dart';
+import '../functions/calculate_time.dart';
 
 class NewCalculation extends StatefulWidget {
   NewCalculation();
@@ -11,59 +12,12 @@ class NewCalculation extends StatefulWidget {
   _NewCalculationState createState() => _NewCalculationState();
 }
 
-DateTime _actualDate = new DateTime.now();
-DateTime _selectedDate;
-
-String _option;
-String _result;
-String _isLessString;
-
-int _calculationResult;
-
-bool _isLessYears;
 
 List<CalculatedValues> userCalculation = [];
 final List<String> _calculateOptions =  ['Years', 'Months', 'Days',  'Hours', 'Minutes', 'Seconds'];
 
 class _NewCalculationState extends State<NewCalculation> {
 
- void _calculateScore() {
-   final bool _isLess = _isLessYears;
-
-   if(_actualDate == null || _selectedDate == null || _option.isEmpty)
-     return null;
-
-   switch(_option){
-     case 'Years': {
-       bool _checkDataYears(DateTime a, DateTime b){
-         if(int.parse(DateFormat.m().format(_selectedDate)) - int.parse(DateFormat.m().format(_actualDate)) >= 1){
-           _isLessYears = false;
-           _isLessString = 'More';
-         } else {
-           _isLessYears = true;
-           _isLessString = 'Less';
-         }
-         return _isLess;
-       }
-
-       _calculationResult = int.parse(DateFormat.y().format(_selectedDate)) - int.parse(DateFormat.y().format(_actualDate));
-
-       if((_checkDataYears(_selectedDate, _actualDate)) == true){
-         _result = '$_isLessString than $_calculationResult years left!';
-       } else {
-         _result = '$_isLessString than $_calculationResult years left!';
-       }
-
-     }
-   }
-
-   showModalBottomSheet(context: context, builder:(_){
-     userCalculation.add(CalculatedValues(value: _result));
-      return CalculatedValuesList(userCalculation);
-   });
-
-
-  }
 
   void _showDatePicker() {
     showDatePicker(
@@ -75,74 +29,127 @@ class _NewCalculationState extends State<NewCalculation> {
         if(pickedDate == null)
           return;
         setState( () {
-          _selectedDate = pickedDate;
+          selectedDate = pickedDate;
         });
     });
   }
 
-
-
+ userCalculationState()  {
+    print('===============');
+    print(result);
+    setState((){
+      userCalculation.add(CalculatedValues(value: result));
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    final curScaleFactor = MediaQuery.of(context).textScaleFactor;
 
-   final _dropDownButton = DropdownButton<String>(
-     onChanged:(String value){
-       setState(() {
-         _option = value;
-       });
-     },
-     value: _option,
-     hint:Text('${_option != null ? _option: 'Select option'}'),
-     items: _calculateOptions.map((String value){
-       return new DropdownMenuItem<String>(
-           value:value,
-           child:new Text(value)
-       );
-     }).toList(),);
+    /* LayoutBuilder  provides parent widget`s constrains. It helps with sizing, because LayoutBuild`s final size will match its child`s size. */
 
-   final _datePicker = Container(
-       height:70,
-       child:Row(children: [
-         Expanded(
-           child: Text('Picked date : ${_selectedDate != null ? DateFormat.yMd().format(_selectedDate): 'No date chosen!'}'),
-         ),
-         FlatButton(
-           textColor: Theme.of(context).primaryColor,
-           child:Text(
-             'Choose data',
-             style:TextStyle(fontWeight: FontWeight.bold),
-           ),
-           onPressed: _showDatePicker,
-         ),
-       ],)
-   );
+    return LayoutBuilder(builder: (ctx, constraints) {
 
-   final _calculateButton = Container(
-     height:100,
-     color:Theme.of(context).accentColor,
-     child:Row(children: [
-       FlatButton(
-         child:Text(
-             'Calculate',
-             style:TextStyle(
-               fontWeight: FontWeight.bold,
-               fontSize: 22,
-               color:Theme.of(context).primaryColor,
-             )
-         ),
-         onPressed:_calculateScore,
-       ),
-     ]),
-   );
+      final _dropDownButton = DropdownButton<String>(
+        hint: Container(
+          /* Wrapping Text widget into Container gives a possibility to use constraints,
+             so the app can be responsive. Sometimes tho, device can be really small
+             and that is the reason I have wrapped it into FittedBox either.
+           */
+          height:constraints.maxHeight * 0.1,
+          child: FittedBox(
+            child: Text(
+              '${option != null ? option : 'Select option'}',
+              style: TextStyle(
+                fontSize: 14 * curScaleFactor,
+              ),
+            ),),
+        ),
+        items: _calculateOptions.map((String value) {
+          return new DropdownMenuItem<String>(
+              value: value,
+              child: Container(
+                  height:constraints.maxHeight * 0.075,
+                  child:FittedBox(
+                      child: new Text(
+                          value,
+                          style:TextStyle(
+                            fontSize:12 * curScaleFactor,
+                          ),),
+                  ),
+              ),
+          );
+        }).toList(),
+
+        /* Set state saves value of clicked DropDownButton option to variable _option */
+        onChanged: (String value) {
+          setState(() {
+            option = value;
+          });
+
+        },);
 
 
-    return Container(
-      child: Card(
-        elevation:10,
+
+      final _calculateButton = Container(
+        height: constraints.maxHeight * 0.25,
+        color: Theme
+            .of(context)
+            .accentColor,
+        child: Row(children: [
+          FlatButton(
+            child: Text(
+                'Calculate',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20 * curScaleFactor,
+                  color: Theme.of(context).primaryColor,
+                )
+            ),
+            onPressed:() {
+              calculateScore(); userCalculationState();
+            }
+          ),
+        ]),
+      );
+
+      final pickedDateText = 'Picked date : ${selectedDate != null ? DateFormat.yMd().format(selectedDate) : 'No date chosen!'}';
+
+      final _datePicker = Container(
+          height: constraints.maxHeight * 0.2,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [ FittedBox(
+                child: Text(
+                  pickedDateText,
+                  style: TextStyle(
+                    fontSize:16 * curScaleFactor,
+                  ),),
+              ),
+            FlatButton(
+              textColor: Theme.of(context).primaryColor,
+              child: Container(
+                height: constraints.maxHeight * 0.075,
+                child: FittedBox(
+                  child: Text(
+                    'Choose data',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 8 * curScaleFactor,
+                    ),
+                  ),
+                ),
+              ),
+              onPressed: _showDatePicker,
+            ),
+          ],)
+      );
+
+      return Card(
+        elevation: 10,
         child: Container(
-          padding:EdgeInsets.all(15),
-          child:Column(
+          padding: EdgeInsets.all(15),
+          child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               _dropDownButton,
@@ -151,8 +158,7 @@ class _NewCalculationState extends State<NewCalculation> {
             ],
           ),
         ),
-      ),
-    );
-  }
-}
+      );
+    },);
 
+  }}

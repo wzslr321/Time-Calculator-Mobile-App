@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import './widgets/new_calculation.dart';
 import './widgets/calculation_display.dart';
 
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
       title: 'Time calculator',
       theme: ThemeData(
@@ -35,11 +37,20 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
+
+
   @override
   Widget build(BuildContext context) {
 
+    final curScaleFactor = MediaQuery.of(context).textScaleFactor;
+
     final _appBar =  AppBar(
-      title:Text('Time calculator'),
+      title:Text(
+        'Time calculator',
+        style:TextStyle(
+          fontSize:20 * curScaleFactor,
+        ),
+      ),
     );
 
     final mediaQuery = (MediaQuery.of(context).size.height - _appBar.preferredSize.height - MediaQuery.of(context).padding.top) * 0.5;
