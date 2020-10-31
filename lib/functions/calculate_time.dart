@@ -1,10 +1,7 @@
 import 'package:intl/intl.dart';
 
-import '../widgets/new_calculation.dart';
-import '../models/calculated_values.dart';
-import '../widgets/calculation_display.dart';
 
-DateTime actualDate = new DateTime.now();
+DateTime _actualDate = new DateTime.now();
 DateTime selectedDate;
 
 String option;
@@ -18,13 +15,13 @@ final isLess = isLessYears;
 
 calculateScore() {
 
-  if(actualDate == null || selectedDate == null || option.isEmpty)
+  if(_actualDate == null || selectedDate == null || option.isEmpty)
     return null;
 
   switch(option){
     case 'Years': {
       bool _checkDataYears(DateTime a, DateTime b){
-        if(int.parse(DateFormat.m().format(selectedDate)) - int.parse(DateFormat.m().format(actualDate)) >= 1){
+        if(int.parse(DateFormat.m().format(selectedDate)) - int.parse(DateFormat.m().format(_actualDate)) >= 1){
           isLessYears = false;   isLessString = 'More';
         } else {
           isLessYears = true;    isLessString = 'Less';
@@ -32,9 +29,9 @@ calculateScore() {
         return isLess;
       }
 
-      calculationResult = int.parse(DateFormat.y().format(selectedDate)) - int.parse(DateFormat.y().format(actualDate));
+      calculationResult = int.parse(DateFormat.y().format(selectedDate)) - int.parse(DateFormat.y().format(_actualDate));
 
-      if((_checkDataYears(selectedDate, actualDate)) == true){
+      if((_checkDataYears(selectedDate, _actualDate)) == true){
         result = '$isLessString than $calculationResult years left!';
       } else {
         result = '$isLessString than $calculationResult years left!';

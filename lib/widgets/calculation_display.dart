@@ -39,16 +39,16 @@ class _CalculatedValuesListState extends State<CalculatedValuesList> {
 
   @override
   Widget build(BuildContext context) {
-
-    final curScaleFactor = MediaQuery.of(context).textScaleFactor;
+    // Variables responsible for responsiveness
+    final curScaleFactor   = MediaQuery.of(context).textScaleFactor;
+    final mediaQueryWidth  = MediaQuery.of(context).size.width;
+    final mediaQueryHeight = MediaQuery.of(context).size.height;
 
     return LayoutBuilder(builder: (ctx, constraints) {
 
       final _calculateButton = Container(
         height: constraints.maxHeight * 0.25,
-        color: Theme
-            .of(context)
-            .accentColor,
+        color: Theme.of(context).accentColor,
         child: Row(children: [
           FlatButton(
               child: Text(
@@ -66,40 +66,44 @@ class _CalculatedValuesListState extends State<CalculatedValuesList> {
         ]),
       );
 
-      return Row(
-          children: [
-            Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * 0.15,
-              child:_calculateButton,
-            ),
-            Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * 0.2,
-              child:userCalculation.isEmpty ? Column(children: [
-                FittedBox(
-                  child: Text(
-                    'No calculations have been made yet',
-                    style:noCalculationsTextStyle,
+      return Container(
+        width: mediaQueryWidth * 1,
+        height:constraints.maxHeight * 1,
+        child: Column(
+            children: [
+              Container(
+                width:mediaQueryWidth * 1,
+                height: constraints.maxHeight * 0.15,
+                child:_calculateButton,
+              ),
+              Container(
+                width: mediaQueryWidth * 1,
+                height: constraints.maxHeight * 0.2,
+                child:userCalculation.isEmpty ? Column(children: [
+                  FittedBox(
+                    child: Text(
+                      'No calculations have been made yet',
+                      style:noCalculationsTextStyle,
+                    ),
                   ),
-                ),
-              ],)
-              : Container(
-                // ignore: missing_return
-                child: ListView.builder(itemBuilder: (ctx,index){
-                  if(index == 0){
-                    return Card(
-                      elevation:5,
-                      child:Column(children: [
-                        Text('${userCalculation[index].value}',
-                          style:resultTextStyle,
-                        )],
-                      ),
-                    );
-                  }
-                }),
-              )
-            ),],
-        );
+                ],)
+                : Container(
+                  // ignore: missing_return
+                  child: ListView.builder(itemBuilder: (ctx,index){
+                    if(index == 0){
+                      return Card(
+                        elevation:5,
+                        child:Column(children: [
+                          Text('${userCalculation[index].value}',
+                            style:resultTextStyle,
+                          )],
+                        ),
+                      );
+                    }
+                  }),
+                )
+              ),],
+          ),
+      );
     });
   }}
