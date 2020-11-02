@@ -50,27 +50,24 @@ class _CalculatedValuesListState extends State<CalculatedValuesList> {
     // Style variables which requires context
     final btnTextStyle = TextStyle(
       fontWeight: FontWeight.bold,
-      fontSize: 20 * curScaleFactor,
+      fontSize: 30 * curScaleFactor,
       color: Theme.of(context).primaryColor,
     );
 
     final calculateButton = GradientBorderButtonContainer(
-        gradient:SweepGradient(
+        gradient:LinearGradient(
           colors:[
-            Colors.pink,
             Colors.red,
-            Colors.green,
-            Colors.purple,
-            Colors.teal
+            Theme.of(context).primaryColor,
+            Colors.red,
           ],
-          stops:[0.8, 0.96, 0.74, 0.22, 0.85],
-          startAngle:0.5,
-          endAngle:1,
         ),
         child:FlatButton(
-            child: Text(
-              'Calculate',
-              style:btnTextStyle,
+            child: FittedBox(
+              child: Text(
+                'Calculate',
+                style:btnTextStyle,
+              ),
             ),
             onPressed:() {
               calculateScore(); userCalculationState();
@@ -81,7 +78,7 @@ class _CalculatedValuesListState extends State<CalculatedValuesList> {
     return LayoutBuilder(builder: (ctx, constraints) {
 
       final _calculateButton = Container(
-        height: constraints.maxHeight * 0.25,
+        height: constraints.maxHeight * 0.5,
         color: Theme.of(context).accentColor,
         child: Row(children: [
             calculateButton,

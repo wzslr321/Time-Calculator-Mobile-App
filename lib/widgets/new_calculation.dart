@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -72,16 +73,19 @@ class _NewCalculationState extends State<NewCalculation> {
              so the app can be responsive. Sometimes tho, device can be really small
              and that is the reason I have wrapped it into FittedBox either.
            */
-              height:constraints.maxHeight * 0.1,
+              height:constraints.maxHeight * 0.25,
               width:constraints.maxWidth * 0.75,
-              child: FittedBox(
+              margin:EdgeInsets.only(top: 10),
+              child: SizedBox(
                 child: Text(
-                  '${option != null ? option : 'Select option'}',
-                  style: TextStyle(
-                    fontSize: 14 * curScaleFactor,
-                    letterSpacing:1,
+                    '${option != null ? option : 'Select option'}',
+                    textAlign:TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 20 * curScaleFactor,
+                      letterSpacing:1,
+                    ),
                   ),
-                ),),
+              ),
             ),
             items: _calculateOptions.map((String value) {
               return new DropdownMenuItem<String>(
@@ -108,7 +112,16 @@ class _NewCalculationState extends State<NewCalculation> {
 
             },);
 
+            final chooseDateTextStyle = TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize:16 * curScaleFactor,
+              color:Theme.of(context).primaryColor,
+            );
 
+            final pickedDateTextStyle = TextStyle(
+              fontSize:15 * curScaleFactor,
+              fontFamily:'Quicksand',
+            );
 
 
 
@@ -116,33 +129,28 @@ class _NewCalculationState extends State<NewCalculation> {
       final pickedDateText = 'Picked date : ${selectedDate != null ? DateFormat.yMd().format(selectedDate) : 'No date chosen!'}';
 
       final _datePicker = Container(
-          height: constraints.maxHeight * 0.2,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [ FittedBox(
-                child: Text(
-                  pickedDateText,
-                  style: TextStyle(
-                    fontSize:16 * curScaleFactor,
-                  ),),
+        height:constraints.maxHeight * 0.3,
+        child:Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment:CrossAxisAlignment.end,
+          children: [
+            FittedBox(
+              child: Text(
+                pickedDateText,
+                style: pickedDateTextStyle,
               ),
-            FlatButton(
-              textColor: Theme.of(context).primaryColor,
-              child: Container(
-                height: constraints.maxHeight * 0.075,
-                child: FittedBox(
-                  child: Text(
-                    'Choose data',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 8 * curScaleFactor,
+            ),
+            InkWell(
+              onTap:_showDatePicker,
+                child: Align(
+                alignment:Alignment.bottomCenter,
+                   child: Text(
+                    'Choose date',
+                     style:chooseDateTextStyle,
+              ),
                     ),
                   ),
-                ),
-              ),
-              onPressed: _showDatePicker,
-            ),
-          ],)
+          ],),
       );
 
       return Card(

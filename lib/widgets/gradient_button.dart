@@ -1,25 +1,29 @@
 import 'package:flutter/material.dart';
 
 class GradientPainter extends CustomPainter {
-  GradientPainter({this.gradient, this.strokeWidth});
+  GradientPainter({this.gradient, this.strokeWidth, this.borderRadius});
 
   final Gradient gradient;
   final double strokeWidth;
+  final double borderRadius;
   final Paint paintObject = Paint();
   
   @override 
   void paint(Canvas canvas, Size size) {
     Rect innerRect = Rect.fromLTRB(strokeWidth, strokeWidth, size.width - strokeWidth, size.height - strokeWidth);
+    RRect innerRounderRect = RRect.fromRectAndRadius(innerRect, Radius.circular(borderRadius));
+    
     Rect outerRect = Offset.zero & size;
+    RRect outerRounderRect = RRect.fromRectAndRadius(outerRect, Radius.circular(borderRadius));
 
     paintObject.shader = gradient.createShader(outerRect);
-    Path borderPath = _calculateBorderPath(outerRect,innerRect);
+    Path borderPath = _calculateBorderPath(outerRounderRect,innerRounderRect);
     canvas.drawPath(borderPath, paintObject);
   }
 
-  Path _calculateBorderPath(Rect outerRect, Rect innerRect){
-    Path outerRectPath = Path() ..addRect(outerRect);
-    Path innerRectPath = Path() ..addRect(innerRect);
+  Path _calculateBorderPath(RRect outerRect, RRect innerRect){
+    Path outerRectPath = Path() ..addRRect(outerRect);
+    Path innerRectPath = Path() ..addRRect(innerRect);
     return Path.combine(PathOperation.difference, outerRectPath, innerRectPath);
   }
 
@@ -28,24 +32,40 @@ class GradientPainter extends CustomPainter {
 }
 
 class GradientBorderButtonContainer extends StatelessWidget {
+
   GradientBorderButtonContainer({
     @required gradient,
     @required this.child,
     this.strokeWidth = 4, this.onPressed,
+    this.borderRadius = 64,
+    this.padding = 10,
+    splashColor = Colors.red
   }) : this.painter = GradientPainter(
-      gradient: gradient, strokeWidth: strokeWidth
-  );
+      gradient: gradient, strokeWidth: strokeWidth,borderRadius: borderRadius
+  ), this.splashColor = splashColor ?? gradient.colors.first;
 
   final GradientPainter painter;
   final Widget child;
   final VoidCallback onPressed;
   final double strokeWidth;
+  final double borderRadius;
+  final double padding;
+  final Color splashColor;
 
   @override
   Widget build(BuildContext context) {
     return CustomPaint(
       painter:painter,
-      child:child
+      child:InkWell(
+        highlightColor:Colors.transparent,
+        splashColor:splashColor,
+        borderRadius: BorderRadius.circular(borderRadius),
+        onTap:onPressed,
+        child:Container(
+          padding:EdgeInsets.all(padding + strokeWidth),
+          child:child
+        )
+      )
     );
   }
 }

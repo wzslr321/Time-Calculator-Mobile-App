@@ -60,7 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Container(
-                  height: mediaQuery * 0.4,
+                  height: mediaQuery * 0.25,
                   child: NewCalculation(),
               ),
               Container(
