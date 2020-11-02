@@ -64,7 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: NewCalculation(),
               ),
               Container(
-                  height: mediaQuery * 0.6,
+                  height: mediaQuery * 0.75,
                   child: CalculatedValuesList(userCalculation),
               ),],
           ),

@@ -141,6 +141,8 @@ class _NewCalculationState extends State<NewCalculation> {
               ),
             ),
             InkWell(
+              highlightColor:Colors.transparent,
+              splashColor:Colors.transparent,
               onTap:_showDatePicker,
                 child: Align(
                 alignment:Alignment.bottomCenter,
@@ -154,7 +156,7 @@ class _NewCalculationState extends State<NewCalculation> {
       );
 
       return Card(
-        elevation: 10,
+        elevation: 15,
         child: Container(
           padding: EdgeInsets.all(15),
           child: Column(

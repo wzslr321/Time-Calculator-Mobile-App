@@ -38,11 +38,11 @@ class GradientBorderButtonContainer extends StatelessWidget {
     @required this.child,
     this.strokeWidth = 4, this.onPressed,
     this.borderRadius = 64,
-    this.padding = 10,
+    this.padding = 16,
     splashColor = Colors.red
   }) : this.painter = GradientPainter(
       gradient: gradient, strokeWidth: strokeWidth,borderRadius: borderRadius
-  ), this.splashColor = splashColor ?? gradient.colors.first;
+  );
 
   final GradientPainter painter;
   final Widget child;
@@ -50,7 +50,7 @@ class GradientBorderButtonContainer extends StatelessWidget {
   final double strokeWidth;
   final double borderRadius;
   final double padding;
-  final Color splashColor;
+  final Color splashColor = Colors.lightBlue.withOpacity(0.25);
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +62,7 @@ class GradientBorderButtonContainer extends StatelessWidget {
         borderRadius: BorderRadius.circular(borderRadius),
         onTap:onPressed,
         child:Container(
-          padding:EdgeInsets.all(padding + strokeWidth),
+          padding:EdgeInsets.symmetric(vertical: padding + strokeWidth, horizontal: padding + strokeWidth + 15),
           child:child
         )
       )

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/new_calculation.dart';
@@ -50,8 +51,9 @@ class _CalculatedValuesListState extends State<CalculatedValuesList> {
     // Style variables which requires context
     final btnTextStyle = TextStyle(
       fontWeight: FontWeight.bold,
-      fontSize: 30 * curScaleFactor,
+      fontSize: 22 * curScaleFactor,
       color: Theme.of(context).primaryColor,
+      fontFamily: 'Quicksand',
     );
 
     final calculateButton = GradientBorderButtonContainer(
@@ -62,7 +64,6 @@ class _CalculatedValuesListState extends State<CalculatedValuesList> {
             Colors.red,
           ],
         ),
-        child:FlatButton(
             child: FittedBox(
               child: Text(
                 'Calculate',
@@ -72,7 +73,7 @@ class _CalculatedValuesListState extends State<CalculatedValuesList> {
             onPressed:() {
               calculateScore(); userCalculationState();
             },
-        ),);
+        );
 
 
     return LayoutBuilder(builder: (ctx, constraints) {
@@ -80,55 +81,52 @@ class _CalculatedValuesListState extends State<CalculatedValuesList> {
       final _calculateButton = Container(
         height: constraints.maxHeight * 0.5,
         color: Theme.of(context).accentColor,
-        child: Row(children: [
-            calculateButton,
-        ]),
+        child: Row(
+            mainAxisAlignment:MainAxisAlignment.center,
+            children: [calculateButton,]
+        ),
       );
 
       return Container(
-        width: mediaQueryWidth * 1,
-        height:constraints.maxHeight * 1,
-        child: Column(
-            children: [
-              Container(
-                width:mediaQueryWidth * 1,
-                height: constraints.maxHeight * 0.15,
-                child:_calculateButton,
-              ),
-              Container(
-                width: mediaQueryWidth * 1,
-                height: constraints.maxHeight * 0.2,
-                child:userCalculation.isEmpty ? Column(children: [
-                  FittedBox(
-                    child: Text(
-                      'No calculations have been made yet',
-                      style:noCalculationsTextStyle,
+                  width:mediaQueryWidth * 1,
+                  height: constraints.maxHeight * 1,
+                  child:Column(
+                    children: [
+                      _calculateButton,
+                    userCalculation.isEmpty ? Container (
+                      height:constraints.maxHeight * 0.5,
+                      child:
+                        Center(
+                          child: Text(
+                            'No calculations have been made yet',
+                            textAlign:TextAlign.center,
+                            style:noCalculationsTextStyle,
+                          ),
+                        ),
+                    ) : Container(
+                      alignment:Alignment.center,
+                      // ignore: missing_return
+                      child: ListView.builder(
+                        itemCount:1,
+                        // ignore: missing_return
+                        itemBuilder:(BuildContext ctx, int index){
+                          if(index == 0){
+                            return ListTile(
+                                title:Center(
+                                  child: Text(
+                                    '${userCalculation[index].value}',
+                                    textAlign:TextAlign.center,
+                                    style:resultTextStyle,
+                                  ),
+                                )
+                            );
+                          }
+                        },
+                      ),
                     ),
+                    ],
                   ),
-                ],)
-                : Container(
-                  // ignore: missing_return
-                  child: ListView.builder(
-                    itemCount:5,
-                    // ignore: missing_return
-                    itemBuilder:(BuildContext ctx, int index){
-                      if(index == 0){
-                        return ListTile(
-                            leading: Icon(Icons.list),
-                            trailing: Text('${index + 1}',
-                              style: TextStyle(
-                                  color: Colors.green,fontSize: 12),),
-                            title:Text(
-                              '${userCalculation[index].value}',
-                              style:resultTextStyle,
-                            )
-                        );
-                      }
-                    },
-                  ),
-                )
-              ),],
-          ),
-      );
+             );
+
     });
   }}
