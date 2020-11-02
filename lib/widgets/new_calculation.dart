@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import '../models/calculated_values.dart';
 import '../functions/calculate_time.dart';
 
+
 class NewCalculation extends StatefulWidget {
   NewCalculation();
 
@@ -44,48 +45,69 @@ class _NewCalculationState extends State<NewCalculation> {
     final curScaleFactor = MediaQuery.of(context).textScaleFactor;
     final List<String> _calculateOptions =  ['Years', 'Months', 'Days',  'Hours', 'Minutes', 'Seconds'];
 
+    final dropDownItemTextStyle = TextStyle (
+        fontSize:16 * curScaleFactor,
+        fontFamily: 'Quicksand',
+    );
+
+
+
     /* LayoutBuilder  provides parent widget`s constrains. It helps with sizing, because LayoutBuild`s final size will match its child`s size. */
 
     return LayoutBuilder(builder: (ctx, constraints) {
 
+      BoxDecoration boxDecoration(){
+        return BoxDecoration(
+          border:Border(
+            top:BorderSide(
+              color:Theme.of(context).primaryColor, width:1,
+            )
+          )
+        );
+      }
+
       final _dropDownButton = DropdownButton<String>(
-        hint: Container(
-          /* Wrapping Text widget into Container gives a possibility to use constraints,
+            hint: Container(
+              /* Wrapping Text widget into Container gives a possibility to use constraints,
              so the app can be responsive. Sometimes tho, device can be really small
              and that is the reason I have wrapped it into FittedBox either.
            */
-          height:constraints.maxHeight * 0.1,
-          child: FittedBox(
-            child: Text(
-              '${option != null ? option : 'Select option'}',
-              style: TextStyle(
-                fontSize: 14 * curScaleFactor,
-              ),
-            ),),
-        ),
-        items: _calculateOptions.map((String value) {
-          return new DropdownMenuItem<String>(
-              value: value,
-              child: Container(
-                  height:constraints.maxHeight * 0.075,
-                  child:FittedBox(
-                      child: new Text(
-                          value,
-                          style:TextStyle(
-                            fontSize:12 * curScaleFactor,
-                          ),),
+              height:constraints.maxHeight * 0.1,
+              width:constraints.maxWidth * 0.75,
+              child: FittedBox(
+                child: Text(
+                  '${option != null ? option : 'Select option'}',
+                  style: TextStyle(
+                    fontSize: 14 * curScaleFactor,
+                    letterSpacing:1,
                   ),
-              ),
-          );
-        }).toList(),
+                ),),
+            ),
+            items: _calculateOptions.map((String value) {
+              return new DropdownMenuItem<String>(
+                value: value,
+                child: Container(
+                    height: MediaQuery.of(context).size.height * 0.075,
+                    decoration: boxDecoration(),
+                    child: Center(
+                      child:new Text(
+                        value,
+                        textAlign:TextAlign.center,
+                        style:dropDownItemTextStyle,
+                      ),
+                    )
+                ),
+              );
+            }).toList(),
 
-        /* Set state saves value of clicked DropDownButton option to variable _option */
-        onChanged: (String value) {
-          setState(() {
-            option = value;
-          });
+            /* Set state saves value of clicked DropDownButton option to variable _option */
+            onChanged: (String value) {
+              setState(() {
+                option = value;
+              });
 
-        },);
+            },);
+
 
 
 

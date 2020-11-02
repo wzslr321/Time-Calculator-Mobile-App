@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../widgets/new_calculation.dart';
 import '../models/calculated_values.dart';
 import '../functions/calculate_time.dart';
+import '../widgets/gradient_button.dart';
 
 
 class CalculatedValuesList extends StatefulWidget {
@@ -53,6 +54,29 @@ class _CalculatedValuesListState extends State<CalculatedValuesList> {
       color: Theme.of(context).primaryColor,
     );
 
+    final calculateButton = GradientBorderButtonContainer(
+        gradient:SweepGradient(
+          colors:[
+            Colors.pink,
+            Colors.red,
+            Colors.green,
+            Colors.purple,
+            Colors.teal
+          ],
+          stops:[0.8, 0.96, 0.74, 0.22, 0.85],
+          startAngle:0.5,
+          endAngle:1,
+        ),
+        child:FlatButton(
+            child: Text(
+              'Calculate',
+              style:btnTextStyle,
+            ),
+            onPressed:() {
+              calculateScore(); userCalculationState();
+            },
+        ),);
+
 
     return LayoutBuilder(builder: (ctx, constraints) {
 
@@ -60,15 +84,7 @@ class _CalculatedValuesListState extends State<CalculatedValuesList> {
         height: constraints.maxHeight * 0.25,
         color: Theme.of(context).accentColor,
         child: Row(children: [
-          FlatButton(
-              child: Text(
-                  'Calculate',
-                  style:btnTextStyle,
-              ),
-              onPressed:() {
-                calculateScore(); userCalculationState();
-              }
-          ),
+            calculateButton,
         ]),
       );
 
