@@ -15,7 +15,7 @@ class NewCalculation extends StatefulWidget {
 
 /*
    Global userCalculation variable used in calculation_display file.
-   I use List, because in future i plan to display previous calculations.
+   I use List, because in future I plan to display previous calculations.
    In actual situation, better would be simple string with result.
  */
 
@@ -43,14 +43,31 @@ class _NewCalculationState extends State<NewCalculation> {
 
   @override
   Widget build(BuildContext context) {
+
     final curScaleFactor = MediaQuery.of(context).textScaleFactor;
     final List<String> _calculateOptions =  ['Years', 'Months', 'Days',  'Hours', 'Minutes', 'Seconds'];
+    final pickedDateText = 'Picked date : ${selectedDate != null ? DateFormat.yMd().format(selectedDate) : 'No date chosen!'}';
 
     final dropDownItemTextStyle = TextStyle (
         fontSize:16 * curScaleFactor,
         fontFamily: 'Quicksand',
     );
 
+    final dropDownHintTextStyle = TextStyle(
+      fontSize:20 * curScaleFactor,
+      fontFamily: 'Quicksand',
+    );
+
+    final chooseDateTextStyle = TextStyle(
+      fontWeight: FontWeight.bold,
+      fontSize:16 * curScaleFactor,
+      color:Theme.of(context).primaryColor,
+    );
+
+    final pickedDateTextStyle = TextStyle(
+      fontSize:15 * curScaleFactor,
+      fontFamily:'Quicksand',
+    );
 
 
     /* LayoutBuilder  provides parent widget`s constrains. It helps with sizing, because LayoutBuild`s final size will match its child`s size. */
@@ -71,8 +88,7 @@ class _NewCalculationState extends State<NewCalculation> {
             hint: Container(
               /* Wrapping Text widget into Container gives a possibility to use constraints,
              so the app can be responsive. Sometimes tho, device can be really small
-             and that is the reason I have wrapped it into FittedBox either.
-           */
+             and that is the reason I have wrapped it into FittedBox either. */
               height:constraints.maxHeight * 0.25,
               width:constraints.maxWidth * 0.75,
               margin:EdgeInsets.only(top: 10),
@@ -80,10 +96,7 @@ class _NewCalculationState extends State<NewCalculation> {
                 child: Text(
                     '${option != null ? option : 'Select option'}',
                     textAlign:TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 20 * curScaleFactor,
-                      letterSpacing:1,
-                    ),
+                    style:dropDownHintTextStyle,
                   ),
               ),
             ),
@@ -109,24 +122,7 @@ class _NewCalculationState extends State<NewCalculation> {
               setState(() {
                 option = value;
               });
-
             },);
-
-            final chooseDateTextStyle = TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize:16 * curScaleFactor,
-              color:Theme.of(context).primaryColor,
-            );
-
-            final pickedDateTextStyle = TextStyle(
-              fontSize:15 * curScaleFactor,
-              fontFamily:'Quicksand',
-            );
-
-
-
-
-      final pickedDateText = 'Picked date : ${selectedDate != null ? DateFormat.yMd().format(selectedDate) : 'No date chosen!'}';
 
       final _datePicker = Container(
         height:constraints.maxHeight * 0.3,
@@ -155,9 +151,7 @@ class _NewCalculationState extends State<NewCalculation> {
           ],),
       );
 
-      return Card(
-        elevation: 15,
-        child: Container(
+      return Container(
           padding: EdgeInsets.all(15),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -166,8 +160,7 @@ class _NewCalculationState extends State<NewCalculation> {
               _datePicker,
             ],
           ),
-        ),
-      );
+        );
     },);
 
   }}

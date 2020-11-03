@@ -32,15 +32,6 @@ class _CalculatedValuesListState extends State<CalculatedValuesList> {
     fontWeight: FontWeight.bold,
   );
 
-  final noCalculationsTextStyle = TextStyle(
-      color:Colors.lightBlue,
-      fontSize:22,
-      fontWeight: FontWeight.normal,
-  );
-
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -75,32 +66,47 @@ class _CalculatedValuesListState extends State<CalculatedValuesList> {
             },
         );
 
-
     return LayoutBuilder(builder: (ctx, constraints) {
 
-      final _calculateButton = Container(
-        height: constraints.maxHeight * 0.5,
-        color: Theme.of(context).accentColor,
-        child: Row(
-            mainAxisAlignment:MainAxisAlignment.center,
-            children: [calculateButton,]
+      final _calculateButton = Card(
+        elevation: 15,
+        child:Container(
+          decoration: new BoxDecoration(
+            border:Border(
+              top:BorderSide(
+                color:Theme.of(context).primaryColor,
+                width:1.5,
+              ),
+              bottom:BorderSide(
+                color:Theme.of(context).primaryColor,
+                width:1.5,
+              ),
+            ),
+          ),
+          height: constraints.maxHeight * 0.45,
+          child: Row(
+              mainAxisAlignment:MainAxisAlignment.center,
+              children: [calculateButton,]
+          ),
         ),
       );
 
       return Container(
-                  width:mediaQueryWidth * 1,
-                  height: constraints.maxHeight * 1,
-                  child:Column(
-                    children: [
-                      _calculateButton,
+            width:mediaQueryWidth * 1,
+            height: constraints.maxHeight * 1,
+            child:Column(
+                children: [
+                    _calculateButton,
                     userCalculation.isEmpty ? Container (
                       height:constraints.maxHeight * 0.5,
                       child:
-                        Center(
-                          child: Text(
-                            'No calculations have been made yet',
-                            textAlign:TextAlign.center,
-                            style:noCalculationsTextStyle,
+                        Container(
+                          child: Center(
+                            child: Text(
+                              'No calculations have been made yet',
+                              textAlign:TextAlign.center,
+                              style:resultTextStyle,
+                            ),
                           ),
                         ),
                     ) : Container(
