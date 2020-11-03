@@ -99,38 +99,40 @@ class _CalculatedValuesListState extends State<CalculatedValuesList> {
                     _calculateButton,
                     userCalculation.isEmpty ? Container (
                       height:constraints.maxHeight * 0.5,
-                      child:
-                        Container(
-                          child: Center(
+                      child: Center(
                             child: Text(
                               'No calculations have been made yet',
                               textAlign:TextAlign.center,
                               style:resultTextStyle,
                             ),
                           ),
-                        ),
                     ) : Container(
-                      alignment:Alignment.center,
-                      // ignore: missing_return
-                      child: ListView.builder(
-                        itemCount:1,
-                        // ignore: missing_return
-                        itemBuilder:(BuildContext ctx, int index){
-                          if(index == 0){
-                            return ListTile(
-                                title:Center(
-                                  child: Text(
-                                    '${userCalculation[index].value}',
-                                    textAlign:TextAlign.center,
-                                    style:resultTextStyle,
-                                  ),
-                                )
-                            );
-                          }
-                        },
-                      ),
-                    ),
-                    ],
+                            height:constraints.maxHeight * 0.5,
+                              alignment: Alignment.center,
+                              child: new ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: userCalculation.length,
+                                itemBuilder: (BuildContext ctx, int index) {
+                                    return Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          width:constraints.maxWidth * 1,
+                                          alignment:Alignment.center,
+                                          child: new Text(
+                                              userCalculation[index].value,
+                                              textAlign: TextAlign.center,
+                                              style:resultTextStyle,
+                                          ),
+                                        ),
+                                      ],
+                                    );
+                                },
+                              ),
+                            ),
+                      ],
+
                   ),
              );
 
