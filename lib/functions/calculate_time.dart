@@ -1,36 +1,17 @@
 import 'package:intl/intl.dart';
+import 'package:time_app/widgets/new_calculation.dart';
 
-import '../models/date_formats.dart';
-
-// Global variables used in new_calculation && calculation_display
+// Global variables used in new_calculation && calculation_display && calculation_options
 DateTime selectedDate;
 DateTime actualDate = new DateTime.now();
 
 String option;
 String result;
 
-void calculateScore() {
+String calculateScore() {
 
-
-  String _isLessString;
-  bool _isLessYears;
-  int _calculationResult;
-
-   if( selectedDate == null || option.isEmpty)
-      result = 'Please enter date first!';
-   if(actualDate == null )
-      result = 'Weird error occurred, please report it to our developers';
-
-  bool _checkIsLess(DateTime selected, DateTime actual) {
-    if (int.parse(DateFormat.M().format(selectedDate)) -
-        int.parse(DateFormat.M().format(actualDate)) >= 1) {
-        _isLessYears = false;
-        _isLessString = 'More';
-    } else {
-        _isLessYears = true;
-        _isLessString = 'Less';
-    }
-    return _isLessYears;
+    if(option == null || selectedDate == null) {
+      return result = 'Please enter date and option first!';
   }
 
   final List<int> formatsList = [
@@ -42,75 +23,86 @@ void calculateScore() {
     int.parse(DateFormat.s().format(selectedDate))  - int.parse(DateFormat.s().format(actualDate)),
   ];
 
+
+  String _isLessString;
+  bool _isLessYears;
+  int _calculationResult;
+
   int _allNumbers;
   int _calcLength;
 
-  switch(option) {
-    case 'Years' : {
-       _calcLength = 1;
-       break;
-    }
-    case 'Months': {
-      _calcLength = 2;
-      break;
-    }
-    case 'Days': {
-      _calcLength = 3;
-      break;
-    }
-    case 'Hours': {
-      _calcLength = 4;
-      break;
-    }
-    case 'Minutes': {
-      _calcLength = 5;
-      break;
-    }
-    case 'Seconds': {
-      _calcLength = 6;
-      break;
+  for(int i = 0; i < calculateOptions.length; i++){
+    if(option == calculateOptions[i]){
+      _calcLength = i;
     }
   }
 
-  for(int i = 0; i < _calcLength; i++ )
+  for(int i = 0; i < formatsList.length; i++ )
     switch(_calcLength){
-      case 1 : {
-        _allNumbers = formatsList[i];
+      case 0 :{
+        _allNumbers = formatsList[0];
         break;
       }
-      case 2: {
+      case 1: {
         _allNumbers = formatsList[0] * 12 + formatsList[1];
         break;
       }
+      case 2: {
+        _allNumbers = formatsList[0] * 360 + formatsList[1] * 30 + formatsList[2];
+        break;
+      }
       case 3: {
-        _allNumbers = formatsList[0] * 12 * 30 + formatsList[1] * 30 + formatsList[2];
+        _allNumbers = formatsList[0] * 8640 + formatsList[1] * 720 + formatsList[2] * 24 + formatsList[3];
         break;
       }
       case 4: {
-        _allNumbers = formatsList[0] * 12 * 30 * 24 + formatsList[1] * 30 * 24 + formatsList[2] * 24 + formatsList[3];
+        _allNumbers = formatsList[0] * 518400 + formatsList[1] * 43200 + formatsList[2] * 1440 + formatsList[3] * 60 + formatsList[4];
         break;
       }
       case 5: {
-        _allNumbers = formatsList[0] * 12 * 30 * 24 * 60 + formatsList[1] * 30 * 24 * 60 + formatsList[2] * 24 * 60 + formatsList[3] * 60 + formatsList[4];
-        break;
-      }
-      case 6: {
-        _allNumbers = formatsList[0] * 12 * 30 * 24 * 60 * 60 + formatsList[1] * 30 * 24 * 60 * 60 + formatsList[2] * 24 * 60 * 60 + formatsList[3] * 60 * 60 + formatsList[4] * 60 + formatsList[5];
+        _allNumbers = formatsList[0] * 3110400 + formatsList[1] * 2592000 + formatsList[2] * 86400 + formatsList[3] * 3600 + formatsList[4] * 60 + formatsList[5];
         break;
       }
     }
+
+  bool _checkIsLess(DateTime selected, DateTime actual) {
+    if (int.parse(DateFormat.M().format(selectedDate)) -
+        int.parse(DateFormat.M().format(actualDate)) >= 1) {
+      _isLessYears = false;
+      _isLessString = 'More';
+    } else {
+      _isLessYears = true;
+      _isLessString = 'Less';
+    }
+    return _isLessYears;
+  }
+
+  _allNumbers > 0 ? _allNumbers = _allNumbers : _allNumbers = 0;
+
 
   switch(option) {
     case 'Years': {
-        _calculationResult = _allNumbers;
+      _calculationResult = _allNumbers;
+      _checkIsLess(selectedDate, actualDate);
 
-        _checkIsLess(selectedDate, actualDate);
-        (_isLessString != null && _calculationResult != null)
-            ? result = '$_isLessString than $_calculationResult years left!'
-            : result = 'Error occurred';
-        break;
-      }
-    default : {
-      result = '$_allNumbers left';
+      _allNumbers == 0 ? result = 'You have selected the current year! \n Change calculate option or date. '
+          : (_isLessString != null && _calculationResult != null)
+          ? result = '$_isLessString than $_calculationResult years left!'
+          : result = 'Error occurred';
+      break;
     }
-  }}
+    default : {
+      final String singularOption = option.substring(0,option.length -1).toLowerCase();
+      _allNumbers == 0
+          ? option != 'Months'
+            ?  result = 'You have selected the current day! \n Change calculate option or date. '
+            :  result = 'You have selected the current $singularOption ! \n Change calculate option or date. '
+          : _allNumbers == 1
+            ? result = '$_allNumbers $singularOption left!'
+            : result = '$_allNumbers ${option.toLowerCase()} left!';
+    }
+  }
+
+  return result;
+
+}

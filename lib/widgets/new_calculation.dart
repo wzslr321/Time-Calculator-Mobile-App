@@ -20,6 +20,7 @@ class NewCalculation extends StatefulWidget {
  */
 
 List<CalculatedValues> userCalculation = [];
+final List<String> calculateOptions =  ['Years', 'Months', 'Days',  'Hours', 'Minutes', 'Seconds'];
 
 
 class _NewCalculationState extends State<NewCalculation> {
@@ -40,12 +41,10 @@ class _NewCalculationState extends State<NewCalculation> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
 
     final curScaleFactor = MediaQuery.of(context).textScaleFactor;
-    final List<String> _calculateOptions =  ['Years', 'Months', 'Days',  'Hours', 'Minutes', 'Seconds'];
     final pickedDateText = 'Picked date : ${selectedDate != null ? DateFormat.yMd().format(selectedDate) : 'No date chosen!'}';
 
     final dropDownItemTextStyle = TextStyle (
@@ -100,7 +99,7 @@ class _NewCalculationState extends State<NewCalculation> {
                   ),
               ),
             ),
-            items: _calculateOptions.map((String value) {
+            items: calculateOptions.map((String value) {
               return new DropdownMenuItem<String>(
                 value: value,
                 child: Container(

@@ -111,7 +111,7 @@ class _CalculatedValuesListState extends State<CalculatedValuesList> {
                               alignment: Alignment.center,
                               child: new ListView.builder(
                                 scrollDirection: Axis.horizontal,
-                                itemCount: userCalculation.length,
+                                itemCount:userCalculation.length,
                                 itemBuilder: (BuildContext ctx, int index) {
                                     return Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
