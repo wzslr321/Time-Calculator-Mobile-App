@@ -6,7 +6,6 @@
 
 It gives a possibility to show time in  few options : Years, Months, Days, Hours, Minutes, Seconds. It will be expanded someday, most probably. 
 
-# 
 #
 #
 
