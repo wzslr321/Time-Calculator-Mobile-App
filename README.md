@@ -4,14 +4,25 @@
 
 *This is my first own mobile app, which is meant to calculate how many days left to a specified date.*
 
-*It gives a possibility to choose between few options like : week days only, show time in hours,minutes  etc.* 
+It gives a possibility to show time in  few options : Years, Months, Days, Hours, Minutes, Seconds. It will be expanded someday, most probably. 
 
-# 
+#
+#
+
+**Presentation of application** :**https://youtu.be/5OBjCG7gfZo**
+
+#
+#
 
 **How to set it up locally?** &#129047;
 
-> You must have working properly Android / iOS Emulator  or your own device configured with flutter.
+>  You must have working properly Android / iOS Emulator  or your own device configured with flutter.
 
 >  Tutorial how to install and configure it all can be found here: https://flutter.dev/docs/get-started/install
 
- If everything is configured, while in main directory, type `flutter run`  to start app in your emulator.
+>  If everything is configured, while in main directory, type `flutter pub get` afterwards`flutter run`  to start app in your emulator.
+
+#
+#
+
+**I am a very begginner, so every pull-request for code improvment is welcome and appreciated!**
