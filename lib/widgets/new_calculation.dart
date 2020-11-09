@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 
 import '../models/calculated_values.dart';
 import '../functions/calculate_time.dart';
+import '../widgets/default_text_widget.dart';
 
 
 class NewCalculation extends StatefulWidget {
@@ -18,9 +19,6 @@ class NewCalculation extends StatefulWidget {
    I use List, because in future I plan to display previous calculations.
    In actual situation, better would be simple string with result.
  */
-
-List<CalculatedValues> userCalculation = [];
-final List<String> calculateOptions =  ['Years', 'Months', 'Days',  'Hours', 'Minutes', 'Seconds'];
 
 
 class _NewCalculationState extends State<NewCalculation> {
@@ -44,30 +42,7 @@ class _NewCalculationState extends State<NewCalculation> {
   @override
   Widget build(BuildContext context) {
 
-    final curScaleFactor = MediaQuery.of(context).textScaleFactor;
     final pickedDateText = 'Picked date : ${selectedDate != null ? DateFormat.yMd().format(selectedDate) : 'No date chosen!'}';
-
-    final dropDownItemTextStyle = TextStyle (
-        fontSize:16 * curScaleFactor,
-        fontFamily: 'Quicksand',
-    );
-
-    final dropDownHintTextStyle = TextStyle(
-      fontSize:20 * curScaleFactor,
-      fontFamily: 'Quicksand',
-    );
-
-    final chooseDateTextStyle = TextStyle(
-      fontWeight: FontWeight.bold,
-      fontSize:16 * curScaleFactor,
-      color:Theme.of(context).primaryColor,
-    );
-
-    final pickedDateTextStyle = TextStyle(
-      fontSize:15 * curScaleFactor,
-      fontFamily:'Quicksand',
-    );
-
 
     /* LayoutBuilder  provides parent widget`s constrains. It helps with sizing, because LayoutBuild`s final size will match its child`s size. */
 
@@ -92,11 +67,11 @@ class _NewCalculationState extends State<NewCalculation> {
               width:constraints.maxWidth * 0.75,
               margin:EdgeInsets.only(top: 10),
               child: SizedBox(
-                child: Text(
-                    '${option != null ? option : 'Select option'}',
-                    textAlign:TextAlign.center,
-                    style:dropDownHintTextStyle,
-                  ),
+                child: DefaultTextWidget(
+                  textContent:'${option != null ? option : 'Select option'}',
+                  fontSize:20,
+                  isFittedBox:false
+                ),
               ),
             ),
             items: calculateOptions.map((String value) {
@@ -106,16 +81,13 @@ class _NewCalculationState extends State<NewCalculation> {
                     height: MediaQuery.of(context).size.height * 0.075,
                     decoration: boxDecoration(),
                     child: Center(
-                      child:new Text(
-                        value,
-                        textAlign:TextAlign.center,
-                        style:dropDownItemTextStyle,
-                      ),
+                      child:DefaultTextWidget(
+                        textContent: value,
+                      )
                     )
                 ),
               );
             }).toList(),
-
             /* Set state saves value of clicked DropDownButton option to variable _option */
             onChanged: (String value) {
               setState(() {
@@ -129,11 +101,8 @@ class _NewCalculationState extends State<NewCalculation> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment:CrossAxisAlignment.end,
           children: [
-            FittedBox(
-              child: Text(
-                pickedDateText,
-                style: pickedDateTextStyle,
-              ),
+            DefaultTextWidget(
+              textContent: pickedDateText,
             ),
             InkWell(
               highlightColor:Colors.transparent,
@@ -141,12 +110,13 @@ class _NewCalculationState extends State<NewCalculation> {
               onTap:_showDatePicker,
                 child: Align(
                 alignment:Alignment.bottomCenter,
-                   child: Text(
-                    'Choose date',
-                     style:chooseDateTextStyle,
-              ),
-                    ),
-                  ),
+                   child: DefaultTextWidget(
+                     textContent: 'Choose date',
+                     fontColor:Theme.of(context).primaryColor,
+                     fontWeight:FontWeight.bold ,
+                   )
+                ),
+            ),
           ],),
       );
 

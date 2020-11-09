@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../widgets/new_calculation.dart';
 import '../models/calculated_values.dart';
 import '../functions/calculate_time.dart';
 import '../widgets/gradient_button.dart';
+import '../widgets/default_text_widget.dart';
 
 
 class CalculatedValuesList extends StatefulWidget {
@@ -25,27 +25,9 @@ class _CalculatedValuesListState extends State<CalculatedValuesList> {
       });
   }
 
-
-  final resultTextStyle = TextStyle(
-    color:Colors.lightBlue,
-    fontSize:22,
-    fontWeight: FontWeight.bold,
-  );
-
-
   @override
   Widget build(BuildContext context) {
-    // Variables responsible for responsiveness
-    final curScaleFactor   = MediaQuery.of(context).textScaleFactor;
-    final mediaQueryWidth  = MediaQuery.of(context).size.width;
-
-    // Style variables which requires context
-    final btnTextStyle = TextStyle(
-      fontWeight: FontWeight.bold,
-      fontSize: 22 * curScaleFactor,
-      color: Theme.of(context).primaryColor,
-      fontFamily: 'Quicksand',
-    );
+    final mediaQuery  = MediaQuery.of(context);
 
     final calculateButton = GradientBorderButtonContainer(
         gradient:LinearGradient(
@@ -55,11 +37,11 @@ class _CalculatedValuesListState extends State<CalculatedValuesList> {
             Colors.red,
           ],
         ),
-            child: FittedBox(
-              child: Text(
-                'Calculate',
-                style:btnTextStyle,
-              ),
+            child: DefaultTextWidget(
+                textContent:'Calculate',
+                fontWeight: FontWeight.bold,
+                fontColor:Theme.of(context).primaryColor,
+                fontSize: 22,
             ),
             onPressed:() {
               calculateScore(); userCalculationState();
@@ -92,7 +74,7 @@ class _CalculatedValuesListState extends State<CalculatedValuesList> {
       );
 
       return Container(
-            width:mediaQueryWidth * 1,
+            width:mediaQuery.size.width * 1,
             height: constraints.maxHeight * 1,
             child:Column(
                 children: [
@@ -100,10 +82,11 @@ class _CalculatedValuesListState extends State<CalculatedValuesList> {
                     userCalculation.isEmpty ? Container (
                       height:constraints.maxHeight * 0.5,
                       child: Center(
-                            child: Text(
-                              'No calculations have been made yet',
-                              textAlign:TextAlign.center,
-                              style:resultTextStyle,
+                            child: DefaultTextWidget(
+                              textContent:'No calculations have been made yet',
+                              fontColor: Colors.lightBlue,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 22,
                             ),
                           ),
                     ) : Container(
@@ -120,10 +103,11 @@ class _CalculatedValuesListState extends State<CalculatedValuesList> {
                                         Container(
                                           width:constraints.maxWidth * 1,
                                           alignment:Alignment.center,
-                                          child: new Text(
-                                              userCalculation[index].value,
-                                              textAlign: TextAlign.center,
-                                              style:resultTextStyle,
+                                          child: DefaultTextWidget(
+                                            textContent:userCalculation[index].value,
+                                            fontColor: Colors.lightBlue,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 22,
                                           ),
                                         ),
                                       ],
@@ -131,8 +115,7 @@ class _CalculatedValuesListState extends State<CalculatedValuesList> {
                                 },
                               ),
                             ),
-                      ],
-
+                     ],
                   ),
              );
 

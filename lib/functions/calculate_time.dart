@@ -1,7 +1,11 @@
 import 'package:intl/intl.dart';
-import 'package:time_app/widgets/new_calculation.dart';
+
+import '../models/calculated_values.dart';
 
 // Global variables used in new_calculation && calculation_display && calculation_options
+List<CalculatedValues> userCalculation = [];
+final List<String> calculateOptions =  ['Years', 'Months', 'Days',  'Hours', 'Minutes', 'Seconds'];
+
 DateTime selectedDate;
 DateTime actualDate = new DateTime.now();
 

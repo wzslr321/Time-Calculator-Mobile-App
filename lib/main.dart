@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 
 import './widgets/new_calculation.dart';
 import './widgets/calculation_display.dart';
+import './functions/calculate_time.dart';
 
 
 void main() {
@@ -24,20 +25,22 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    return MaterialApp(
-      title: 'Time calculator',
-      theme: ThemeData(
-        primarySwatch: Colors.lightBlue,
-        accentColor:Color.fromRGBO(196 , 195, 208, 0.2),
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-        fontFamily: 'Quicksand',
-        textTheme:ThemeData.light().textTheme.copyWith(
-          headline6:TextStyle(
-            fontFamily:'OpenSans', fontSize:20,fontWeight: FontWeight.bold,
-          ),
+    final appTheme = ThemeData(
+      primarySwatch: Colors.lightBlue,
+      accentColor:Color.fromRGBO(196 , 195, 208, 0.2),
+      visualDensity: VisualDensity.adaptivePlatformDensity,
+      fontFamily: 'Quicksand',
+      textTheme:ThemeData.light().textTheme.copyWith(
+        headline6:TextStyle(
+        fontFamily:'OpenSans', fontSize:20,fontWeight: FontWeight.bold,
         ),
       ),
-      home: MyHomePage(),
+    );
+
+    return  MaterialApp(
+      title: 'Time calculator',
+      theme:appTheme,
+        home: MyHomePage()
     );
   }
 }
@@ -76,20 +79,23 @@ class _MyHomePageState extends State<MyHomePage> {
     final mediaQuery = MediaQuery.of(context).size.height - _appBar.preferredSize.height - MediaQuery.of(context).padding.top;
 
     final singleScrollViewWidget =
-    SingleChildScrollView(
-      child:Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Container(
-            height: mediaQuery * 0.25,
-            child: NewCalculation(),
-          ),
-          Container(
-            height: mediaQuery * 0.75,
-            child: CalculatedValuesList(userCalculation),
-          ),],
+    SafeArea(
+      child:SingleChildScrollView(
+        child:Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Container(
+              height: mediaQuery * 0.25,
+              child: NewCalculation(),
+            ),
+            Container(
+              height: mediaQuery * 0.75,
+              child: CalculatedValuesList(userCalculation),
+            ),],
+        ),
       ),
     );
+
 
     return Platform.isIOS ? CupertinoPageScaffold(
       navigationBar:_appBar,
