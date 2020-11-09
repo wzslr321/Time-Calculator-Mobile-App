@@ -1,10 +1,24 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 
 import './widgets/new_calculation.dart';
 import './widgets/calculation_display.dart';
 
 
-void main() => runApp(MyApp());
+void main() {
+  // Options below allow to vertical usage of app only
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown
+  ]);
+  runApp(MyApp());
+}
+// If there is not any PreferredOrientation, it is possible to
+// check user`s view mode with MediaQuery.
 
 class MyApp extends StatelessWidget {
   @override
@@ -33,6 +47,8 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
+
+
 class _MyHomePageState extends State<MyHomePage> {
 
   @override
@@ -44,30 +60,42 @@ class _MyHomePageState extends State<MyHomePage> {
       fontSize:20 * curScaleFactor,
     );
 
-    final _appBar =  AppBar(
-      title:Text(
-        'Time calculator',
-        style:appBarTextStyle,
+    final PreferredSizeWidget _appBar = Platform.isIOS ?
+    CupertinoNavigationBar(
+      middle:Text(
+          'Time app',
+          style:appBarTextStyle
       ),
+    ) : AppBar(
+      title:Text(
+          'Time app',
+          style:appBarTextStyle
+      )
     );
 
     final mediaQuery = MediaQuery.of(context).size.height - _appBar.preferredSize.height - MediaQuery.of(context).padding.top;
 
-    return Scaffold(
-        appBar:_appBar,
-        body:SingleChildScrollView(
-          child:Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Container(
-                  height: mediaQuery * 0.25,
-                  child: NewCalculation(),
-              ),
-              Container(
-                  height: mediaQuery * 0.75,
-                  child: CalculatedValuesList(userCalculation),
-              ),],
+    final singleScrollViewWidget =
+    SingleChildScrollView(
+      child:Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Container(
+            height: mediaQuery * 0.25,
+            child: NewCalculation(),
           ),
-        ),
+          Container(
+            height: mediaQuery * 0.75,
+            child: CalculatedValuesList(userCalculation),
+          ),],
+      ),
+    );
+
+    return Platform.isIOS ? CupertinoPageScaffold(
+      navigationBar:_appBar,
+      child:singleScrollViewWidget
+    ) : Scaffold(
+        appBar:_appBar,
+        body:singleScrollViewWidget
     );
   }}
