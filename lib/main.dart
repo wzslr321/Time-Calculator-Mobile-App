@@ -4,10 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 
+
 import './widgets/new_calculation.dart';
 import './widgets/calculation_display.dart';
 import './functions/calculate_time.dart';
-
+import './widgets/default_text_widget.dart';
 
 void main() {
   // Options below allow to vertical usage of app only
@@ -57,23 +58,17 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
 
-    final curScaleFactor = MediaQuery.of(context).textScaleFactor;
-
-    final appBarTextStyle = TextStyle(
-      fontSize:20 * curScaleFactor,
-    );
-
     final PreferredSizeWidget _appBar = Platform.isIOS ?
     CupertinoNavigationBar(
-      middle:Text(
-          'Time app',
-          style:appBarTextStyle
+      middle:const DefaultTextWidget(
+         textContent: 'Time app',
+         fontSize: 20,
       ),
     ) : AppBar(
-      title:Text(
-          'Time app',
-          style:appBarTextStyle
-      )
+      title:const DefaultTextWidget(
+         textContent: 'Time app',
+         fontSize: 20,
+      ),
     );
 
     final mediaQuery = MediaQuery.of(context).size.height - _appBar.preferredSize.height - MediaQuery.of(context).padding.top;

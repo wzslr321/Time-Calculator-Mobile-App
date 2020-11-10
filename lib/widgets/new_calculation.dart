@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../models/calculated_values.dart';
 import '../functions/calculate_time.dart';
 import '../widgets/default_text_widget.dart';
 
@@ -110,7 +109,7 @@ class _NewCalculationState extends State<NewCalculation> {
               onTap:_showDatePicker,
                 child: Align(
                 alignment:Alignment.bottomCenter,
-                   child: DefaultTextWidget(
+                   child:DefaultTextWidget(
                      textContent: 'Choose date',
                      fontColor:Theme.of(context).primaryColor,
                      fontWeight:FontWeight.bold ,

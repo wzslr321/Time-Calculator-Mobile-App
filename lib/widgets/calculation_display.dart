@@ -73,51 +73,54 @@ class _CalculatedValuesListState extends State<CalculatedValuesList> {
         ),
       );
 
-      return Container(
-            width:mediaQuery.size.width * 1,
-            height: constraints.maxHeight * 1,
-            child:Column(
-                children: [
-                    _calculateButton,
-                    userCalculation.isEmpty ? Container (
-                      height:constraints.maxHeight * 0.5,
-                      child: Center(
-                            child: DefaultTextWidget(
-                              textContent:'No calculations have been made yet',
-                              fontColor: Colors.lightBlue,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 22,
-                            ),
-                          ),
-                    ) : Container(
-                            height:constraints.maxHeight * 0.5,
-                              alignment: Alignment.center,
-                              child: new ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                itemCount:userCalculation.length,
-                                itemBuilder: (BuildContext ctx, int index) {
-                                    return Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: [
-                                        Container(
-                                          width:constraints.maxWidth * 1,
-                                          alignment:Alignment.center,
-                                          child: DefaultTextWidget(
-                                            textContent:userCalculation[index].value,
-                                            fontColor: Colors.lightBlue,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 22,
-                                          ),
-                                        ),
-                                      ],
-                                    );
-                                },
-                              ),
-                            ),
-                     ],
-                  ),
-             );
+      final _noCalculatedValueContainer = Container (
+        height:constraints.maxHeight * 0.5,
+        child: Center(
+          child:const DefaultTextWidget(
+            textContent:'No calculations have been made yet',
+            fontColor: Colors.lightBlue,
+            fontWeight: FontWeight.bold,
+            fontSize: 22,
+          ),
+        ),
+      );
 
+      final _calculatedValueContainer = Container(
+        height:constraints.maxHeight * 0.5,
+        alignment: Alignment.center,
+        child: new ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemCount:userCalculation.length,
+          itemBuilder: (BuildContext ctx, int index) {
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  width:constraints.maxWidth * 1,
+                  alignment:Alignment.center,
+                  child: DefaultTextWidget(
+                    textContent:userCalculation[index].value,
+                    fontColor: Colors.lightBlue,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 22,
+                  ),
+                ),
+              ],
+            );
+          },
+        ),
+      );
+
+      return Container(
+        width:mediaQuery.size.width * 1,
+        height: constraints.maxHeight * 1,
+          child:Column(
+            children: [
+              _calculateButton,
+              userCalculation.isEmpty ? _noCalculatedValueContainer  : _calculatedValueContainer
+            ],
+          ),
+      );
     });
   }}
