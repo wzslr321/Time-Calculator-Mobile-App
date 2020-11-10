@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../functions/calculate_time.dart';
-import '../widgets/default_text_widget.dart';
+import '../models/default_text_widget_class.dart';
 
 
 class NewCalculation extends StatefulWidget {
@@ -19,9 +19,7 @@ class NewCalculation extends StatefulWidget {
    In actual situation, better would be simple string with result.
  */
 
-
 class _NewCalculationState extends State<NewCalculation> {
-
 
   void _showDatePicker() {
     showDatePicker(
@@ -43,8 +41,6 @@ class _NewCalculationState extends State<NewCalculation> {
 
     final pickedDateText = 'Picked date : ${selectedDate != null ? DateFormat.yMd().format(selectedDate) : 'No date chosen!'}';
 
-    /* LayoutBuilder  provides parent widget`s constrains. It helps with sizing, because LayoutBuild`s final size will match its child`s size. */
-
     return LayoutBuilder(builder: (ctx, constraints) {
 
       BoxDecoration boxDecoration(){
@@ -59,12 +55,9 @@ class _NewCalculationState extends State<NewCalculation> {
 
       final _dropDownButton = DropdownButton<String>(
             hint: Container(
-              /* Wrapping Text widget into Container gives a possibility to use constraints,
-             so the app can be responsive. Sometimes tho, device can be really small
-             and that is the reason I have wrapped it into FittedBox either. */
               height:constraints.maxHeight * 0.25,
               width:constraints.maxWidth * 0.75,
-              margin:EdgeInsets.only(top: 10),
+              margin:const EdgeInsets.only(top: 10),
               child: SizedBox(
                 child: DefaultTextWidget(
                   textContent:'${option != null ? option : 'Select option'}',
@@ -87,7 +80,6 @@ class _NewCalculationState extends State<NewCalculation> {
                 ),
               );
             }).toList(),
-            /* Set state saves value of clicked DropDownButton option to variable _option */
             onChanged: (String value) {
               setState(() {
                 option = value;
@@ -120,7 +112,7 @@ class _NewCalculationState extends State<NewCalculation> {
       );
 
       return Container(
-          padding: EdgeInsets.all(15),
+          padding:const EdgeInsets.all(15),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [

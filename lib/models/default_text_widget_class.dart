@@ -9,8 +9,6 @@ class DefaultTextWidget extends StatelessWidget{
   final TextAlign textAlign;
   final bool isFittedBox;
 
-
-
   const DefaultTextWidget({
     this.textContent,
     this.fontSize = 16,

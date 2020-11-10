@@ -8,7 +8,7 @@ import 'package:flutter/services.dart';
 import './widgets/new_calculation.dart';
 import './widgets/calculation_display.dart';
 import './functions/calculate_time.dart';
-import './widgets/default_text_widget.dart';
+import 'models/default_text_widget_class.dart';
 
 void main() {
   // Options below allow to vertical usage of app only

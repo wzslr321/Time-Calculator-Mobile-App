@@ -12,6 +12,8 @@ DateTime actualDate = new DateTime.now();
 String option;
 String result;
 
+
+// This function is going to be refactored someday, I know it is ugly as hell.
 String calculateScore() {
 
     if(option == null || selectedDate == null) {
